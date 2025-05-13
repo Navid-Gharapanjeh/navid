@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Navid Gharapanjeh">
+<meta name="author" content="Delvin Bacho">
+<meta name="dcterms.date" content="2025-02-07">
+
+<title>Technical Design – Automatic Solar Panel Detection - Documentation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-327735d1480bff6f7510335fe22ad292.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../docs/technical_functional_design/technical_design.html">Project Documentation</a></li><li class="breadcrumb-item"><a href="../../docs/technical_functional_design/technical_design.html">Technical Design</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Automatic Solar Panel Detection - Documentation</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Process Management</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../docs/process_management/way_of_working.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Way of Working</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../docs/process_management/retrospectives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Retrospectives</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Project Documentation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../docs/technical_functional_design/technical_design.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Technical Design</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../docs/technical_functional_design/functional_design.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Functional Design</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">1. Introduction</a></li>
+  <li><a href="#constraints" id="toc-constraints" class="nav-link" data-scroll-target="#constraints">2. Constraints</a></li>
+  <li><a href="#system-scope-and-context" id="toc-system-scope-and-context" class="nav-link" data-scroll-target="#system-scope-and-context">3. System Scope and Context</a>
+  <ul class="collapse">
+  <li><a href="#context-diagrams" id="toc-context-diagrams" class="nav-link" data-scroll-target="#context-diagrams">3.1 Context Diagrams</a>
+  <ul class="collapse">
+  <li><a href="#solar-panel-detection-system---context-diagram" id="toc-solar-panel-detection-system---context-diagram" class="nav-link" data-scroll-target="#solar-panel-detection-system---context-diagram">Solar Panel Detection System - Context Diagram</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#solution-strategy" id="toc-solution-strategy" class="nav-link" data-scroll-target="#solution-strategy">4. Solution Strategy</a>
+  <ul class="collapse">
+  <li><a href="#key-design-considerations" id="toc-key-design-considerations" class="nav-link" data-scroll-target="#key-design-considerations">Key Design Considerations</a></li>
+  <li><a href="#detailed-approach" id="toc-detailed-approach" class="nav-link" data-scroll-target="#detailed-approach">4.1 Detailed Approach</a>
+  <ul class="collapse">
+  <li><a href="#continuous-training-pipeline" id="toc-continuous-training-pipeline" class="nav-link" data-scroll-target="#continuous-training-pipeline">4.1.1 Continuous Training Pipeline</a></li>
+  <li><a href="#dutch-houses-scraping-process" id="toc-dutch-houses-scraping-process" class="nav-link" data-scroll-target="#dutch-houses-scraping-process">4.1.2 Dutch Houses Scraping Process</a></li>
+  <li><a href="#inferencedetection-process" id="toc-inferencedetection-process" class="nav-link" data-scroll-target="#inferencedetection-process">4.1.3 Inference/Detection Process</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#technology-selection-and-rationale" id="toc-technology-selection-and-rationale" class="nav-link" data-scroll-target="#technology-selection-and-rationale">4.2 Technology Selection and Rationale</a>
+  <ul class="collapse">
+  <li><a href="#comparing-technologies" id="toc-comparing-technologies" class="nav-link" data-scroll-target="#comparing-technologies">4.2.1 Comparing Technologies</a>
+  <ul class="collapse">
+  <li><a href="#programming-language-api-framework" id="toc-programming-language-api-framework" class="nav-link" data-scroll-target="#programming-language-api-framework">Programming Language + API Framework</a></li>
+  <li><a href="#object-storage" id="toc-object-storage" class="nav-link" data-scroll-target="#object-storage">Object Storage</a></li>
+  <li><a href="#define-requirements" id="toc-define-requirements" class="nav-link" data-scroll-target="#define-requirements">1. Define Requirements</a></li>
+  <li><a href="#establish-evaluation-criteria" id="toc-establish-evaluation-criteria" class="nav-link" data-scroll-target="#establish-evaluation-criteria">2. Establish Evaluation Criteria</a></li>
+  <li><a href="#candidate-solutions" id="toc-candidate-solutions" class="nav-link" data-scroll-target="#candidate-solutions">3. Candidate Solutions</a></li>
+  <li><a href="#gathering-data-from-sources" id="toc-gathering-data-from-sources" class="nav-link" data-scroll-target="#gathering-data-from-sources">4. Gathering Data from Sources</a></li>
+  <li><a href="#preliminary-observations" id="toc-preliminary-observations" class="nav-link" data-scroll-target="#preliminary-observations">5. Preliminary Observations</a></li>
+  <li><a href="#data-versioning-tool" id="toc-data-versioning-tool" class="nav-link" data-scroll-target="#data-versioning-tool">Data Versioning Tool</a></li>
+  <li><a href="#storage-for-result-data" id="toc-storage-for-result-data" class="nav-link" data-scroll-target="#storage-for-result-data">Storage for Result Data</a></li>
+  <li><a href="#ml-expriment-tracking-tool" id="toc-ml-expriment-tracking-tool" class="nav-link" data-scroll-target="#ml-expriment-tracking-tool">ML Expriment Tracking Tool</a></li>
+  <li><a href="#cloud-platform" id="toc-cloud-platform" class="nav-link" data-scroll-target="#cloud-platform">Cloud Platform</a></li>
+  <li><a href="#orchestration-automation-tool" id="toc-orchestration-automation-tool" class="nav-link" data-scroll-target="#orchestration-automation-tool">Orchestration / Automation Tool</a></li>
+  </ul></li>
+  <li><a href="#selected-technologies" id="toc-selected-technologies" class="nav-link" data-scroll-target="#selected-technologies">4.2.2 Selected Technologies</a></li>
+  </ul></li>
+  <li><a href="#building-block-view" id="toc-building-block-view" class="nav-link" data-scroll-target="#building-block-view">5. Building Block View</a>
+  <ul class="collapse">
+  <li><a href="#container-view" id="toc-container-view" class="nav-link" data-scroll-target="#container-view">5.1 Container View</a>
+  <ul class="collapse">
+  <li><a href="#external-systems" id="toc-external-systems" class="nav-link" data-scroll-target="#external-systems">External Systems</a></li>
+  </ul></li>
+  <li><a href="#component-view" id="toc-component-view" class="nav-link" data-scroll-target="#component-view">5.2 Component View</a>
+  <ul class="collapse">
+  <li><a href="#solarpanel-detection-service-container" id="toc-solarpanel-detection-service-container" class="nav-link" data-scroll-target="#solarpanel-detection-service-container">5.2.1 Solarpanel Detection Service Container</a></li>
+  <li><a href="#mlflow-container" id="toc-mlflow-container" class="nav-link" data-scroll-target="#mlflow-container">5.2.2 MlFlow Container</a></li>
+  <li><a href="#airflow-container" id="toc-airflow-container" class="nav-link" data-scroll-target="#airflow-container">5.2.3 Airflow Container</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#runtime-view" id="toc-runtime-view" class="nav-link" data-scroll-target="#runtime-view">6. Runtime View</a>
+  <ul class="collapse">
+  <li><a href="#data-ingestion-process" id="toc-data-ingestion-process" class="nav-link" data-scroll-target="#data-ingestion-process">6.1 Data Ingestion Process</a></li>
+  <li><a href="#training-pipeline" id="toc-training-pipeline" class="nav-link" data-scroll-target="#training-pipeline">6.2 Training Pipeline</a></li>
+  <li><a href="#inference-pipeline" id="toc-inference-pipeline" class="nav-link" data-scroll-target="#inference-pipeline">6.3 Inference Pipeline</a></li>
+  </ul></li>
+  <li><a href="#deployment-view" id="toc-deployment-view" class="nav-link" data-scroll-target="#deployment-view">7. Deployment View</a></li>
+  <li><a href="#cross-cutting-concepts" id="toc-cross-cutting-concepts" class="nav-link" data-scroll-target="#cross-cutting-concepts">8. Cross-cutting Concepts</a></li>
+  <li><a href="#risks-and-technical-debt" id="toc-risks-and-technical-debt" class="nav-link" data-scroll-target="#risks-and-technical-debt">9. Risks and Technical Debt</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="technical_design.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../docs/technical_functional_design/technical_design.html">Project Documentation</a></li><li class="breadcrumb-item"><a href="../../docs/technical_functional_design/technical_design.html">Technical Design</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Technical Design</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-contents">
+             <p>Navid Gharapanjeh </p>
+             <p>Delvin Bacho </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 7, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level1">
+<h1>1. Introduction</h1>
+<p>This document is about the technical part of this solar detection project. What this project is about and what the goals and requirements are, is described extensively in the <a href="../../docs/technical_functional_design/functional_design.html">functional design</a>. The technical design is documented using the arc42 template and will tailor it for this project if needed. The architectural diagrams should be in c4/mermaid. If you are currently reading this on pdf, you can switch to our <a href="https://02-7e9b18.gitlab.io/docs/technical_functional_design/technical_design.html">hosted web-version</a> for better readibility.</p>
+</section>
+<section id="constraints" class="level1">
+<h1>2. Constraints</h1>
+<ul>
+<li><strong>Technical constraints</strong>:
+<ul>
+<li>Hardware, software and cloud providers should be free or open source</li>
+<li>Cloud providers: Either Cloud Student Accounts (e.g.&nbsp;Azure or AWS) or Saxions AWS Account</li>
+<li>Our own machine is not ideal, since we train on images (limited computing power if we have no computation server)</li>
+</ul></li>
+<li><strong>Operational constraints</strong>:
+<ul>
+<li>Deadline: 20. April 2025</li>
+<li>Personell: Group of two software engineers/computer scientists, with limited knowledge in DataScience/ML</li>
+<li>We have the Training data given by the project, which is publicly available. However the Inference data, is not available, and needs to be scraped by us. Training Data (houses of south germany) and Inference data (houses of netherlands), will therefore be not of the same format and region.</li>
+</ul></li>
+</ul>
+</section>
+<section id="system-scope-and-context" class="level1">
+<h1>3. System Scope and Context</h1>
+<p>This section provides an <strong>overview of the system landscape</strong>, showing <strong>who interacts with our system</strong> and <strong>how it fits into the environment</strong>. It includes two high-level context diagrams, with a primary focus on the <strong>Solar Panel Detection System</strong>.</p>
+<section id="context-diagrams" class="level2">
+<h2 class="anchored" data-anchor-id="context-diagrams">3.1 Context Diagrams</h2>
+<section id="solar-panel-detection-system---context-diagram" class="level3">
+<h3 class="anchored" data-anchor-id="solar-panel-detection-system---context-diagram">Solar Panel Detection System - Context Diagram</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/c4_context_diagram.svg" class="img-fluid figure-img"></p>
+<figcaption>Context Diagram - Solarpanel Detection System</figcaption>
+</figure>
+</div>
+<p>The <strong>Solar Panel Detection System</strong> is responsible for <strong>analyzing house images to detect solar panels</strong>. It also includes a lightweight data ingestion process (Python-based) that automatically fetches aerial images of Dutch houses from public services.</p>
+<p><strong>Key Stakeholders and External Systems</strong>:</p>
+<ul>
+<li><strong>Stakeholders</strong>
+<ul>
+<li><strong>Nijhuis Bouw (Client)</strong>: Submits images for inference and checks detection results.</li>
+</ul></li>
+<li><strong>External Services</strong>
+<ul>
+<li><strong>CommonDataFactory</strong>: Receives a <strong>city name</strong> and returns a <strong>list of addresses</strong>.<br>
+</li>
+<li><strong>Bag Viewer Kadaster</strong>: Takes an <strong>address</strong> and provides the corresponding <strong>X, Y coordinates</strong>.<br>
+</li>
+<li><strong>PDOK Luchtfoto WMS</strong>: Takes <strong>X, Y coordinates</strong> and returns the <strong>aerial image</strong> of a house.<br>
+</li>
+<li><strong>Data Storage for Results</strong>: Currently an Excel file (owned by Selin) that stores detection outputs alongside other project data (e.g., energy label calculations). A move to a more robust database solution is under consideration.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="solution-strategy" class="level1">
+<h1>4. Solution Strategy</h1>
+<p>The <strong>primary objective</strong> of this project is to implement a <strong>fully automated, monolithic Data and ML Pipeline</strong> for detecting solar panels in aerial or satellite images and associating these detections with Dutch house IDs. We draw on a simplified ML pipeline—focusing on:</p>
+<ol type="1">
+<li><strong>Data Ingestion</strong><br>
+</li>
+<li><strong>Data Preprocessing</strong><br>
+</li>
+<li><strong>Model Training</strong><br>
+</li>
+<li><strong>Model Deployment</strong><br>
+</li>
+<li><strong>Model Validation</strong><br>
+</li>
+<li><strong>Model Feedback</strong></li>
+</ol>
+<p>Given our <strong>limited resources</strong> and <strong>small team</strong>, we choose a <strong>monolithic approach</strong> to keep the architecture straightforward. Each stage of the pipeline (Ingestion, Preprocessing, Training, etc.) is <strong>modular</strong> enough to be refined or replaced without large-scale re-engineering.</p>
+<p>We also break down the project into <strong>three core processes</strong>:</p>
+<ol type="1">
+<li><strong>Continuous Training Pipeline</strong> – Establishes the typical ML lifecycle to keep the model up-to-date.<br>
+</li>
+<li><strong>Dutch Houses Scraping Process</strong> – Automates retrieval of Dutch house imagery from public sources.<br>
+</li>
+<li><strong>Inference/Detection Process</strong> – Uses the trained model to detect solar panels in newly scraped images and link them to BAG IDs.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/ml-pipeline.png" class="img-fluid figure-img"></p>
+<figcaption>ML Pipeline</figcaption>
+</figure>
+</div>
+<blockquote class="blockquote">
+<p><strong>Note</strong>: Some ML phases—like <strong>Data Validation</strong>, <strong>Model Tuning</strong>, and <strong>Model Analysis</strong>—are out of scope. We focus on ensuring a functional end-to-end pipeline rather than a fully optimized or deeply validated model.</p>
+</blockquote>
+<section id="key-design-considerations" class="level2">
+<h2 class="anchored" data-anchor-id="key-design-considerations">Key Design Considerations</h2>
+<ul>
+<li><p><strong>Automation &amp; Reproducibility</strong><br>
+We use an orchestration tool (e.g., <strong>Apache Airflow</strong>) to automatically schedule and run all pipelines, from scraping to inference.</p></li>
+<li><p><strong>Accuracy &amp; Domain Adaptation</strong><br>
+The training data (Germany) differs from where inferences are run (the Netherlands). We plan to compare multiple detection frameworks (e.g., <strong>YOLO</strong>, <strong>Faster R-CNN</strong>). Thorough hyperparameter tuning is <strong>out of scope</strong>, but we aim for a robust initial baseline.</p></li>
+<li><p><strong>House ID Linking</strong><br>
+An internal subsystem queries <strong>Kadaster</strong> and <strong>PDOK</strong> APIs to map detected solar panels to Dutch addresses (BAG IDs). Results can then be merged into datasets used for energy label calculations.</p></li>
+</ul>
+<hr>
+</section>
+<section id="detailed-approach" class="level2">
+<h2 class="anchored" data-anchor-id="detailed-approach">4.1 Detailed Approach</h2>
+<section id="continuous-training-pipeline" class="level3">
+<h3 class="anchored" data-anchor-id="continuous-training-pipeline">4.1.1 Continuous Training Pipeline</h3>
+<p>This pipeline manages how we train (and occasionally re-train) the solar panel detection model using labeled satellite images from Germany.</p>
+<section id="data-ingestion-versioning" class="level4">
+<h4 class="anchored" data-anchor-id="data-ingestion-versioning">Data Ingestion &amp; Versioning</h4>
+<ul>
+<li><strong>What We Do</strong>
+<ul>
+<li>Store new training data (images + bounding box labels) in an object store (e.g., <strong>MinIO</strong>).<br>
+</li>
+<li>Consider optionally using <strong>DVC</strong> or <strong>Git LFS</strong> for versioning.<br>
+</li>
+</ul></li>
+<li><strong>Rationale</strong>
+<ul>
+<li>Ensures reproducibility of training runs.<br>
+</li>
+<li>Straightforward for the team to upload new data without manual overhead.</li>
+</ul></li>
+</ul>
+</section>
+<section id="data-validation" class="level4">
+<h4 class="anchored" data-anchor-id="data-validation">Data Validation</h4>
+<ul>
+<li><strong>Out of Scope</strong>
+<ul>
+<li>We are not performing extensive checks or anomaly detection.<br>
+</li>
+<li>We assume provided data is valid and labeled correctly.</li>
+</ul></li>
+</ul>
+</section>
+<section id="data-preprocessing" class="level4">
+<h4 class="anchored" data-anchor-id="data-preprocessing">Data Preprocessing</h4>
+<ul>
+<li><strong>What We Do</strong>
+<ul>
+<li>Minimal or no preprocessing; possibly convert images to a uniform format (e.g., resizing, channel standardization).<br>
+</li>
+</ul></li>
+<li><strong>Technologies</strong>
+<ul>
+<li><strong>OpenCV</strong> or <strong>Pillow</strong> for image transformations as needed.</li>
+</ul></li>
+</ul>
+</section>
+<section id="model-training" class="level4">
+<h4 class="anchored" data-anchor-id="model-training">Model Training</h4>
+<ul>
+<li><strong>What We Do</strong>
+<ul>
+<li>Train an <strong>object detection</strong> model (likely <strong>YOLOv5</strong> or <strong>Faster R-CNN</strong>) on the labeled German data.<br>
+</li>
+<li>Track basic performance metrics (e.g., accuracy, mAP) using <strong>MLflow</strong>.<br>
+</li>
+</ul></li>
+<li><strong>Focus</strong>
+<ul>
+<li>Achieve a baseline model suitable for adaptation to Dutch imagery later.<br>
+</li>
+<li>Full hyperparameter tuning is <strong>not</strong> included.</li>
+</ul></li>
+</ul>
+</section>
+<section id="model-validation" class="level4">
+<h4 class="anchored" data-anchor-id="model-validation">Model Validation</h4>
+<ul>
+<li><strong>Minimal</strong>
+<ul>
+<li>We do log key metrics (precision, recall, mAP) on a small validation set.<br>
+</li>
+<li>No strict pass/fail criteria for automatic gating; we simply observe if training is successful.</li>
+</ul></li>
+</ul>
+</section>
+<section id="model-deployment" class="level4">
+<h4 class="anchored" data-anchor-id="model-deployment">Model Deployment</h4>
+<ul>
+<li><strong>What We Do</strong>
+<ul>
+<li>Save the trained model artifacts (weights, config) back to <strong>MinIO</strong> with a version label.<br>
+</li>
+<li>The model is then considered the “latest” for the inference pipeline to load.</li>
+</ul></li>
+</ul>
+</section>
+<section id="model-feedback" class="level4">
+<h4 class="anchored" data-anchor-id="model-feedback">Model Feedback</h4>
+<ul>
+<li><strong>What We Do</strong>
+<ul>
+<li>Manual checks by developers or subject-matter experts.<br>
+</li>
+<li>No automated feedback loop or active learning in place at this time.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="dutch-houses-scraping-process" class="level3">
+<h3 class="anchored" data-anchor-id="dutch-houses-scraping-process">4.1.2 Dutch Houses Scraping Process</h3>
+<p>This process retrieves <strong>real-world images</strong> from Dutch addresses, serving as the inference dataset source.</p>
+<ul>
+<li><strong>Inputs</strong>
+<ul>
+<li>User or automated trigger specifying a <strong>city name</strong> (e.g., “Enschede”).<br>
+</li>
+</ul></li>
+<li><strong>Steps</strong>
+<ol type="1">
+<li><strong>Address List</strong>: Fetch addresses from <strong>CommonDataFactory</strong>.<br>
+</li>
+<li><strong>Coordinate Lookup</strong>: For each address, query <strong>Kadaster</strong> (Bag Viewer) to obtain X/Y coordinates and BAG ID.<br>
+</li>
+<li><strong>Download Aerial Images</strong>: Use <strong>PDOK Luchtfoto WMS</strong> to get top-down house images.<br>
+</li>
+<li><strong>Storage</strong>: Save each image in <strong>MinIO</strong>, tagged with its BAG ID.<br>
+</li>
+</ol></li>
+<li><strong>Technologies</strong>
+<ul>
+<li><strong>Python Scripts</strong> (the “webscraper”), possibly run by <strong>Apache Airflow</strong>.<br>
+</li>
+<li><strong>Requests</strong> library for API calls; data stored in <strong>MinIO</strong>.<br>
+</li>
+</ul></li>
+<li><strong>Outcome</strong>
+<ul>
+<li>A curated set of Dutch house images (with associated metadata) ready for the inference/detection process.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="inferencedetection-process" class="level3">
+<h3 class="anchored" data-anchor-id="inferencedetection-process">4.1.3 Inference/Detection Process</h3>
+<p>Once we have <strong>Dutch house images</strong> and a <strong>trained model</strong>, we apply the detection logic to identify solar panels and associate them with BAG IDs.</p>
+<section id="gathering-new-images" class="level4">
+<h4 class="anchored" data-anchor-id="gathering-new-images">Gathering New Images</h4>
+<ul>
+<li><strong>What We Do</strong>
+<ul>
+<li>Monitor <strong>MinIO</strong> for newly scraped images.<br>
+</li>
+<li>Triggered periodically (e.g., daily) by <strong>Airflow</strong> or on-demand by the user.</li>
+</ul></li>
+</ul>
+</section>
+<section id="model-loading" class="level4">
+<h4 class="anchored" data-anchor-id="model-loading">Model Loading</h4>
+<ul>
+<li><strong>What We Do</strong>
+<ul>
+<li>Retrieve the “latest” model artifact from <strong>MinIO</strong>.<br>
+</li>
+<li>Load weights and config into a <strong>YOLO</strong> or <strong>Faster R-CNN</strong> inference setup.</li>
+</ul></li>
+</ul>
+</section>
+<section id="running-detection" class="level4">
+<h4 class="anchored" data-anchor-id="running-detection">Running Detection</h4>
+<ul>
+<li><strong>Steps</strong>
+<ol type="1">
+<li>Perform solar panel detection on each image.<br>
+</li>
+<li>Extract bounding boxes and confidence scores.<br>
+</li>
+<li>Merge detection outcomes with existing house metadata (BAG ID).</li>
+</ol></li>
+<li><strong>Technologies</strong>
+<ul>
+<li><strong>PyTorch</strong> or <strong>TensorFlow</strong>-based detection libraries.<br>
+</li>
+<li><strong>MLflow</strong> can be used to log basic inference metrics if desired.</li>
+</ul></li>
+</ul>
+</section>
+<section id="storing-results" class="level4">
+<h4 class="anchored" data-anchor-id="storing-results">Storing Results</h4>
+<ul>
+<li><strong>What We Do</strong>
+<ul>
+<li>Write final detection results (house ID, presence of solar panel, confidence) to a <strong>PostgreSQL</strong> table or a CSV.<br>
+</li>
+<li>These results can then be integrated with other datasets (e.g., energy labels).</li>
+</ul></li>
+<li><strong>Model Feedback</strong>
+<ul>
+<li>Largely manual. If users find inaccuracies, they inform developers for potential retraining or improvements.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+</section>
+</section>
+<section id="technology-selection-and-rationale" class="level1">
+<h1>4.2 Technology Selection and Rationale</h1>
+<p>In this project, we aim to build a <strong>Machine Learning Object Detection System</strong> with <strong>end-to-end automated pipelines</strong>. Based on our solution strategy, which is based on our functional requirements, we can deduce the following type of technologies needed:</p>
+<ol type="1">
+<li><strong>Training Pipeline</strong>
+<ul>
+<li>Storing data/images<br>
+</li>
+<li>Versioning data/images</li>
+<li>Processing data/images</li>
+<li>Training a model<br>
+</li>
+<li>Tracking the model (validation, deployment, feedback)</li>
+</ul></li>
+<li><strong>Inference Pipeline</strong>
+<ul>
+<li>Loading trained models<br>
+</li>
+<li>Performing real-time predictions<br>
+</li>
+<li>Storing the inference results<br>
+</li>
+<li>Serving predictions via an API</li>
+</ul></li>
+</ol>
+<p>To support these pipelines, the following <strong>technology categories</strong> have been identified:</p>
+<ul>
+<li><p><strong>Programming Language + API Framework</strong><br>
+Core development environment for building, training, and serving ML models.</p></li>
+<li><p><strong>Object Storage</strong><br>
+Required for handling large volumes of image data (or any unstructured data).</p></li>
+<li><p><strong>Data Versioning Tool</strong><br>
+Ensures reproducibility and manageability of large datasets across multiple training iterations.</p></li>
+<li><p><strong>Storage for Result Data</strong><br>
+Structured or semi-structured storage for logs, metadata, or inference outputs.</p></li>
+<li><p><strong>ML Experiment Tracking Tool</strong><br>
+Logs hyperparameters, metrics, and artifacts to maintain a clear record of experiments and model versions. Can deploy models.</p></li>
+<li><p><strong>Cloud Platform</strong><br>
+Provides infrastructure services (compute, storage, networking).</p></li>
+<li><p><strong>Orchestration / Automation Tool</strong><br>
+Coordinates the entire end-to-end workflow (data ingestion, model training, inference jobs).</p></li>
+</ul>
+<section id="comparing-technologies" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-technologies">4.2.1 Comparing Technologies</h2>
+<section id="programming-language-api-framework" class="level3">
+<h3 class="anchored" data-anchor-id="programming-language-api-framework">Programming Language + API Framework</h3>
+<p>For choosing the programming language, we can keep the comparison short. Basically, we have the following requirements for choosing the programming language: - needs to have libraries, that can process data easily - needs to have libraries, that can train ML-Models (object detection) easily - needs to be well adopted and have big community, so we as newbies, can research if we are stuck with problems - needs to be compatible, with the work already made by selin and her knowledge - needs to have an API Framework</p>
+<p>Libraries and ability to build data pipelines: - Based on multiple sources, Python, R and Julia are the most used programming languages, which are widely used for data science purposes and that lets you build pipelines <a href="https://www.datacamp.com/blog/top-programming-languages-for-data-scientists-in-2022">datacamp</a>, <a href="https://csweb.rice.edu/academics/graduate-programs/online-mds/blog/programming-languages-for-data-science">Rice Engineering department of Computer Science</a>, <a href="https://online.maryville.edu/online-masters-degrees/data-science/resources/programming-languages-for-data-scientists/">maryville education</a>. Also a lot of them list sql, but sql is only a query language for relational datbases, and there you cannot actually build pipelines.</p>
+<p>Compatibility with our environment: - The scripts that selin provided to us, are python scripts, and selin, is most familiar with python.</p>
+<p>Community: - Based on the yearly <a href="https://survey.stackoverflow.co/2024/technology#1-programming-scripting-and-markup-languages">Stackoverflow survey from 2024</a>, 51% of the respondents uses python, 4.3% use R and only 1.1% use Julia.</p>
+<p>API-Framework availability: - All of the languages also have api frameworks e.g.&nbsp;<a href="https://fastapi.tiangolo.com/">FastAPI(Python)</a>, <a href="https://restrserve.org/">RestReserve(R)</a>, <a href="https://genieframework.com/">Genie(Julia)</a></p>
+<section id="choice" class="level5">
+<h5 class="anchored" data-anchor-id="choice">Choice</h5>
+<p>Based on the research, we probably technically could develop this system using all of the languages and framework.</p>
+<p>But in case of ease of implementation, we think python is best since it has the biggest community. Also, we will still need to choose other technologies, like Experiment tracking, Databases, etc. Therefore we need to choose a well adopted and wide spread programming language, that has well used libraries to use also the other technologies in combination with our chosen programming language.</p>
+<p>Also Selin and both developers, are well known in python, and it makes it easier to work with selin. Also in the end, she needs to adapt our work for the future purposes of the NOWATT Project.</p>
+</section>
+</section>
+<section id="object-storage" class="level3">
+<h3 class="anchored" data-anchor-id="object-storage">Object Storage</h3>
+<p>This section follows our <strong>data-driven, step-by-step methodology</strong> for selecting the most suitable object storage solution. Given that our project involves managing a significant volume of image data and potentially large inference outputs, <strong>object storage</strong> is a critical component.</p>
+<hr>
+</section>
+<section id="define-requirements" class="level3">
+<h3 class="anchored" data-anchor-id="define-requirements">1. Define Requirements</h3>
+<ol type="1">
+<li><strong>Scalability &amp; Capacity</strong>
+<ul>
+<li>Must handle potentially <strong>large volumes</strong> of images (satellite or otherwise).<br>
+</li>
+<li>Should scale seamlessly as our dataset grows (especially if we anticipate adding data continuously).</li>
+</ul></li>
+<li><strong>S3 Compatibility</strong>
+<ul>
+<li>Prefer an <strong>S3-compatible interface</strong> for easy integration with common ML tools and data workflows.</li>
+</ul></li>
+<li><strong>Cost-Effectiveness</strong>
+<ul>
+<li>Since this is a <strong>10-week project</strong> with limited resources, we need to be mindful of budget and TCO (Total Cost of Ownership).</li>
+</ul></li>
+<li><strong>Ease of Integration</strong>
+<ul>
+<li>Should integrate smoothly with the <strong>Python</strong> ecosystem, as well as any data versioning or orchestration tools.</li>
+</ul></li>
+<li><strong>Reliability &amp; Availability</strong>
+<ul>
+<li>Must ensure data durability (backups, replication) and consistent uptime for training/inference pipelines.</li>
+</ul></li>
+</ol>
+<hr>
+</section>
+<section id="establish-evaluation-criteria" class="level3">
+<h3 class="anchored" data-anchor-id="establish-evaluation-criteria">2. Establish Evaluation Criteria</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 72%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Criterion</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Scalability</strong></td>
+<td>Ability to handle increasing data volumes without major overhead</td>
+</tr>
+<tr class="even">
+<td><strong>Performance</strong></td>
+<td>Read/write speeds, especially with large file sizes</td>
+</tr>
+<tr class="odd">
+<td><strong>S3 Compatibility</strong></td>
+<td>Support for S3 APIs or compatible SDKs</td>
+</tr>
+<tr class="even">
+<td><strong>Integration</strong></td>
+<td>Ease of connecting with ML frameworks, data versioning tools</td>
+</tr>
+<tr class="odd">
+<td><strong>Cost</strong></td>
+<td>Pricing model (storage, egress), licensing fees if any</td>
+</tr>
+<tr class="even">
+<td><strong>Security &amp; Compliance</strong></td>
+<td>Built-in encryption, IAM, access control, compliance certifications</td>
+</tr>
+<tr class="odd">
+<td><strong>Maintainability</strong></td>
+<td>Overhead for setup, updates, and ongoing management</td>
+</tr>
+<tr class="even">
+<td><strong>References / Adoption</strong></td>
+<td>Community usage, official documentation, case studies</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="candidate-solutions" class="level3">
+<h3 class="anchored" data-anchor-id="candidate-solutions">3. Candidate Solutions</h3>
+<p>Below is a brief comparison of <strong>four</strong> commonly considered object storage options:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 12%">
+<col style="width: 8%">
+<col style="width: 12%">
+<col style="width: 10%">
+<col style="width: 18%">
+<col style="width: 10%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Object Storage</strong></th>
+<th><strong>Scalability</strong></th>
+<th><strong>Performance</strong></th>
+<th><strong>S3 Compatibility</strong></th>
+<th><strong>Integration</strong></th>
+<th><strong>Cost</strong></th>
+<th><strong>Security &amp; Compliance</strong></th>
+<th><strong>Maintainability</strong></th>
+<th><strong>References / Adoption</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>MinIO</strong></td>
+<td>Horizontally scalable; can run on-prem or cloud</td>
+<td>Generally good; comparable to AWS S3 for typical workloads</td>
+<td>S3-compatible API</td>
+<td>Strong Python support, easy to connect with ML libraries</td>
+<td>Self-hosted (infrastructure costs), no license fees</td>
+<td>Supports encryption, IAM, compliance depends on self-setup</td>
+<td>Medium (requires some DevOps)</td>
+<td>Popular in self-managed &amp; hybrid deployments</td>
+</tr>
+<tr class="even">
+<td><strong>AWS S3</strong></td>
+<td>Virtually unlimited scale, managed by AWS</td>
+<td>High performance, global availability</td>
+<td>Native S3</td>
+<td>Excellent Python SDK (boto3), wide tool integration</td>
+<td>Pay-as-you-go; can become costly for high egress</td>
+<td>Full compliance suite (e.g., SOC, HIPAA) with managed IAM</td>
+<td>Low (fully managed)</td>
+<td>Industry-standard, widely adopted</td>
+</tr>
+<tr class="odd">
+<td><strong>Azure Blob</strong></td>
+<td>Scales with Azure platform</td>
+<td>Similar to S3 in performance</td>
+<td>Not S3 by default, but can use bridging tools</td>
+<td>Good integration with Azure ML, Python SDK</td>
+<td>Pay-as-you-go; egress fees apply</td>
+<td>Offers enterprise compliance, robust role-based access</td>
+<td>Low (fully managed, if on Azure)</td>
+<td>Popular in Microsoft-centric ecosystems</td>
+</tr>
+<tr class="even">
+<td><strong>GCP Storage</strong></td>
+<td>Scales with Google Cloud</td>
+<td>High performance, multi-region support</td>
+<td>XML/JSON API, not S3 out-of-the-box, but partial compatibility</td>
+<td>Python SDK (google-cloud-storage)</td>
+<td>Pay-as-you-go; egress fees apply</td>
+<td>Comprehensive security features, compliance certifications</td>
+<td>Low (fully managed, if on GCP)</td>
+<td>Popular in Google Cloud ML solutions</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="gathering-data-from-sources" class="level3">
+<h3 class="anchored" data-anchor-id="gathering-data-from-sources">4. Gathering Data from Sources</h3>
+<ol type="1">
+<li><strong>Official Documentation</strong>
+<ul>
+<li>Examined feature guides and reference architectures from MinIO, AWS, Azure, and GCP.<br>
+</li>
+</ul></li>
+<li><strong>Community Benchmarks &amp; Case Studies</strong>
+<ul>
+<li>Looked at performance benchmarks published by open-source communities (e.g., comparing MinIO vs.&nbsp;AWS S3 for throughput).<br>
+</li>
+<li>Reviewed real-world case studies indicating the ease of integration with Python-based ML flows.</li>
+</ul></li>
+<li><strong>Industry &amp; Team Constraints</strong>
+<ul>
+<li>Considered the <strong>team’s DevOps expertise</strong> and budget constraints for a short 10-week project.</li>
+</ul></li>
+</ol>
+<hr>
+</section>
+<section id="preliminary-observations" class="level3">
+<h3 class="anchored" data-anchor-id="preliminary-observations">5. Preliminary Observations</h3>
+<ul>
+<li><strong>MinIO</strong> is <strong>self-hosted</strong> and works well for on-prem or hybrid environments, providing <strong>S3 compatibility</strong> at minimal licensing cost. However, it requires <strong>more DevOps effort</strong> than fully managed cloud services.</li>
+<li><strong>AWS S3</strong>, <strong>Azure Blob</strong>, and <strong>GCP Storage</strong> are <strong>managed services</strong> offering high reliability and easy integration, but <strong>cost</strong> can escalate with large-scale storage or high egress traffic.</li>
+<li>Given we have a <strong>10-week timeline</strong>, choosing a fully managed solution might reduce operational overhead—<strong>unless</strong> there is an existing on-prem requirement or preference.</li>
+</ul>
+<p>In the <strong>next section</strong>, we will <strong>finalize</strong> our object storage selection and outline the rationale behind that choice. We’ll also consider the <strong>project’s specific constraints</strong> (e.g., budget, DevOps capabilities, data growth projections) to arrive at a balanced, practical decision.</p>
+</section>
+<section id="data-versioning-tool" class="level3">
+<h3 class="anchored" data-anchor-id="data-versioning-tool">Data Versioning Tool</h3>
+</section>
+<section id="storage-for-result-data" class="level3">
+<h3 class="anchored" data-anchor-id="storage-for-result-data">Storage for Result Data</h3>
+</section>
+<section id="ml-expriment-tracking-tool" class="level3">
+<h3 class="anchored" data-anchor-id="ml-expriment-tracking-tool">ML Expriment Tracking Tool</h3>
+</section>
+<section id="cloud-platform" class="level3">
+<h3 class="anchored" data-anchor-id="cloud-platform">Cloud Platform</h3>
+</section>
+<section id="orchestration-automation-tool" class="level3">
+<h3 class="anchored" data-anchor-id="orchestration-automation-tool">Orchestration / Automation Tool</h3>
+</section>
+</section>
+<section id="selected-technologies" class="level2">
+<h2 class="anchored" data-anchor-id="selected-technologies">4.2.2 Selected Technologies</h2>
+</section>
+</section>
+<section id="building-block-view" class="level1">
+<h1>5. Building Block View</h1>
+<p>This section outlines the overall structure of the Solar Panel Detection System, showing the main containers and their interactions. The external storage for results can optionally be integrated into the PostgreSQL database if desired.</p>
+<section id="container-view" class="level2">
+<h2 class="anchored" data-anchor-id="container-view">5.1 Container View</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/c4_container_diagram.svg" class="img-fluid figure-img"></p>
+<figcaption>Container Diagram - Solarpanel Detection System</figcaption>
+</figure>
+</div>
+<p>The diagram above shows the internal structure of the Solar Panel Detection System and how it interacts with external systems and users:</p>
+<ul>
+<li><strong>Airflow</strong> orchestrates the entire pipeline by scheduling scraping, training, and inference tasks.</li>
+<li><strong>Solardetection Service</strong> performs data collection (addresses, imagery), model training, and batch inference. It acts as the core logic of the system.</li>
+<li><strong>Solardetection API (FastAPI)</strong> provides real-time detection by accepting uploaded images and returning predictions. It loads the latest trained model artifacts (from MinIO) and may reuse inference logic from the pipeline.</li>
+<li><strong>MLflow</strong> is used by the pipeline to log experiments, including parameters, metrics, and models. It stores metadata in <strong>PostgreSQL</strong>.</li>
+<li><strong>PostgreSQL</strong> serves as a central relational database for both MLflow metadata and detection results. It is written to by both the pipeline and MLflow.</li>
+<li><strong>MinIO</strong> serves as an object storage system. The pipeline stores input images and trained model artifacts here. FastAPI retrieves model artifacts from MinIO for real-time predictions.</li>
+</ul>
+<section id="external-systems" class="level3">
+<h3 class="anchored" data-anchor-id="external-systems">External Systems</h3>
+<ul>
+<li><strong>CommonDataFactory</strong> provides addresses for a given city.</li>
+<li><strong>Bag Viewer Kadaster</strong> resolves addresses to geographic coordinates.</li>
+<li><strong>PDOK</strong> returns aerial images for given coordinates.</li>
+<li><strong>Data Storage for Results (CSV)</strong> is an external file where final batch detection results are exported. It contains additional house-level energy data and may be merged into the PostgreSQL database in the future.</li>
+<li><strong>Nijhuis Bouw</strong> is the external user who uploads house images and retrieves detection results via the API.</li>
+</ul>
+</section>
+</section>
+<section id="component-view" class="level2">
+<h2 class="anchored" data-anchor-id="component-view">5.2 Component View</h2>
+<p>Below, we focus on three key containers that make up our system: the <strong>Solarpanel Detection Service</strong>, <strong>MLflow</strong>, and <strong>Airflow</strong>. Other containers are either external services or less critical for this architectural overview.</p>
+<section id="solarpanel-detection-service-container" class="level3">
+<h3 class="anchored" data-anchor-id="solarpanel-detection-service-container">5.2.1 Solarpanel Detection Service Container</h3>
+<p>The diagram below shows the <strong>Solarpanel Detection Service</strong> container broken down into three internal components (or pipelines). We’ve removed textual annotations on the relationships to keep the view concise. Each pipeline handles a specific part of the data flow:</p>
+<ol type="1">
+<li><p><strong>Continous Training Pipeline</strong><br>
+This is the <strong>primary pipeline</strong> for continually training the model. Whenever new training data arrives, it runs the full training process, tracking performance and metadata in MLflow. It also deploys any newly trained model.</p></li>
+<li><p><strong>Inference Process</strong><br>
+When new data (e.g., images) is uploaded, this pipeline uses the latest model to detect solar panels, then stores the results in PostgreSQL.</p></li>
+<li><p><strong>Data Ingestion Process</strong><br>
+Since manually collecting Dutch aerial imagery is impractical, the Data Ingestion component automates data retrieval. After a user specifies a city, it fetches relevant housing addresses, their coordinates, and associated aerial images. Each house image is tied to a unique House ID, enabling the detection results to be merged with existing energy-related data.</p></li>
+</ol>
+<p>The following diagram highlights these three pipelines within the Solarpanel Detection Service. For details about each pipeline’s runtime flow, see <a href="#runtime-view">Chapter 6</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/c4_component_solardetection.svg" class="img-fluid figure-img"></p>
+<figcaption>Component Diagram - Solarpanel Detection Container</figcaption>
+</figure>
+</div>
+</section>
+<section id="mlflow-container" class="level3">
+<h3 class="anchored" data-anchor-id="mlflow-container">5.2.2 MlFlow Container</h3>
+<p>MLflow lists the following components that can be used on their <a href="https://www.mlflow.org/docs/1.23.1/concepts.html">documentation</a>.: - MLflow Tracking - MLflow Projects - MLflow Models - MLflow Registry</p>
+<p>For this project only MLflow Tracking is used. Here is a brief description of what MLflow tracking is from their website: &gt; MLflow Tracking is an API and UI for logging parameters, code versions, metrics, and artifacts when running your machine learning code and &gt; for later visualizing the results. You can use MLflow Tracking in any environment (for example, a standalone script or a notebook) to log &gt; results to local files or to a server, then compare multiple runs. Teams can also use it to compare results from different users.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/c4_component_mlflow.svg" class="img-fluid figure-img"></p>
+<figcaption>Component Diagram - MLflow Container</figcaption>
+</figure>
+</div>
+</section>
+<section id="airflow-container" class="level3">
+<h3 class="anchored" data-anchor-id="airflow-container">5.2.3 Airflow Container</h3>
+<p>The Airflow website provides a detailed component diagram of Airflow: <a href="https://airflow.apache.org/docs/apache-airflow/2.5.3/core-concepts/overview.html">https://airflow.apache.org/docs/apache-airflow/2.5.3/core-concepts/overview.html</a>.<br>
+In our project, <strong>Airflow</strong> schedules tasks (defined in <strong>DAGs</strong>) to run the <strong>Python scripts</strong> that implement our solar panel detection logic. Specifically:</p>
+<ol type="1">
+<li><strong>DAG Files</strong> (Directed Acyclic Graph files) define <strong>tasks</strong> and <strong>dependencies</strong>, telling Airflow <em>what</em> to run and <em>when</em>.<br>
+</li>
+<li><strong>Workers</strong> (spawned by the Executor) then <strong>execute</strong> these tasks. When a task is triggered, the Worker loads and runs our Python code, which in turn calls out to the Solar Panel Detection Service.</li>
+</ol>
+<p>In other words, the DAG files serve as the <strong>Airflow “recipe”</strong> for orchestrating our solar panel detection scripts; the scripts themselves <em>live in our codebase</em> (deployed to the Airflow environment) and are <em>executed</em> on Airflow Workers. <img src="images/component_airflow.png" class="img-fluid" alt="Component Diagram - Airflow Container"></p>
+</section>
+</section>
+</section>
+<section id="runtime-view" class="level1">
+<h1>6. Runtime View</h1>
+<p>Below, we illustrate the three main pipelines within the <strong>Solardetection Service</strong> via dynamic runtime diagrams. Each pipeline corresponds to a distinct process (ingestion, training, and inference).</p>
+<section id="data-ingestion-process" class="level2">
+<h2 class="anchored" data-anchor-id="data-ingestion-process">6.1 Data Ingestion Process</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/c4_dynamic_ingestion.svg" class="img-fluid figure-img"></p>
+<figcaption>C4 dynamic diagram for scraping inference data</figcaption>
+</figure>
+</div>
+<p>The <strong>Data Ingestion</strong> process begins when <strong>Nijhuis</strong> provides a city name to the <strong>Solardetection API</strong>. The API delegates the request to the Data Ingestion component within the Solardetection Service, which then interacts with various external services:</p>
+<ol type="1">
+<li><strong>CommonDataFactory</strong> – Provides a comprehensive list of addresses for the city.<br>
+</li>
+<li><strong>Bag Viewer Kadaster</strong> – Translates each address into X,Y coordinates and returns a unique House ID.<br>
+</li>
+<li><strong>PDOK Luchtfoto WMS</strong> – Retrieves aerial imagery for each address, using the provided coordinates.</li>
+</ol>
+<p>As shown in the diagram, the Data Ingestion component stores retrieved images in <strong>MinIO</strong> (<code>S3-compatible API</code>). This ensures the images can be readily accessed by subsequent steps or other pipelines.</p>
+<p><strong>Optional Inference Trigger</strong><br>
+Once the ingestion process completes and the data is saved (in both the database and MinIO), you can <strong>manually</strong> initiate the <strong>Inference Pipeline</strong> (or have it triggered automatically if desired). This follow-up stage uses the newly gathered images and metadata to detect solar panels, as part of your broader data processing workflow.</p>
+</section>
+<section id="training-pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="training-pipeline">6.2 Training Pipeline</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/c4_dynamic_training.svg" class="img-fluid figure-img"></p>
+<figcaption>C4 dynamic diagram for training pipeline</figcaption>
+</figure>
+</div>
+<p>The <strong>Training Pipeline</strong> ensures that new or updated training data (images and labels) can be processed seamlessly to produce a refreshed solar panel detection model. Here’s an overview of the main steps:</p>
+<ol type="1">
+<li><p><strong>Data Upload</strong><br>
+A user (e.g., Nijhuis) <strong>manually</strong> places new training images and metadata in the <strong>MinIO</strong> object store.</p></li>
+<li><p><strong>Airflow Orchestration</strong><br>
+An <strong>Airflow DAG</strong> (the Training DAG) periodically checks the relevant MinIO bucket. If new data is present, it triggers the <strong>Training Pipeline</strong> within the <strong>Solardetection Service</strong>.</p></li>
+<li><p><strong>Model Training</strong><br>
+The Training Pipeline retrieves the images from MinIO, runs the training process (e.g., YOLO or another ML framework), and collects metrics (accuracy, loss, etc.).</p></li>
+<li><p><strong>Logging and Versioning</strong><br>
+Training metrics and model parameters are logged in <strong>MLflow</strong> for future reference. The newly trained model artifact is also stored back into MinIO under a versioned location.</p></li>
+<li><p><strong>Metadata Storage</strong><br>
+Finally, relevant training run details (e.g., model version, timestamp) are written to <strong>PostgreSQL</strong>. This allows easy tracking of which model was trained under specific conditions.</p></li>
+</ol>
+<p>By automating these steps, the pipeline helps maintain an <strong>up-to-date model</strong> with minimal manual oversight, ensuring detection accuracy improves over time.</p>
+</section>
+<section id="inference-pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="inference-pipeline">6.3 Inference Pipeline</h2>
+<p>Below is the dynamic diagram detailing how <strong>new inference images</strong> are processed by the system to detect solar panels:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/c4_dynamic_inference.svg" class="img-fluid figure-img"></p>
+<figcaption>C4 dynamic diagram for detecting solar panel</figcaption>
+</figure>
+</div>
+<ol type="1">
+<li><p><strong>Manual Upload</strong><br>
+<strong>Nijhuis</strong> (the user) manually places new inference images in the <strong>MinIO</strong> inference bucket via an S3-compatible interface.</p></li>
+<li><p><strong>Airflow Inference DAG</strong><br>
+An <strong>Inference DAG</strong> within <strong>Airflow</strong> checks this bucket daily (or on a specified schedule). Once it detects newly uploaded images, it <strong>triggers</strong> the inference pipeline.</p></li>
+<li><p><strong>Inference Execution</strong><br>
+The <strong>Inference Pipeline</strong> component in the <strong>Solardetection Service</strong> loads the <strong>YOLO model</strong> and any required files from <strong>MinIO</strong>. It processes the images to detect solar panels (bounding boxes, confidence scores, etc.).</p></li>
+<li><p><strong>Results Storage</strong><br>
+Upon completion, the pipeline <strong>stores</strong> the detection results in <strong>PostgreSQL</strong>.</p></li>
+</ol>
+<p>This automated setup allows the system to <strong>routinely</strong> scan for and process newly uploaded images without manual monitoring—beyond the initial image upload by the user.</p>
+</section>
+</section>
+<section id="deployment-view" class="level1">
+<h1>7. Deployment View</h1>
+<p>Our entire Solar Panel Detection System is deployed on Microsoft Azure, leveraging a <strong>Student Account</strong> to minimize infrastructure costs. The diagram below provides a high-level overview of how the system’s containers (Airflow, Solardetection Service, FastAPI, MLflow, PostgreSQL, and MinIO) are hosted and interact within the Azure environment.</p>
+<p><strong>Key Points:</strong> - We package each component as a <strong>Docker</strong> container, ensuring consistent and reproducible deployments. - The <strong>Azure</strong> environment offers easy management of compute resources, allowing us to scale or adjust configurations if needed. - <strong>PostgreSQL</strong> and <strong>MinIO</strong> are co-located to simplify data access and reduce latency, while <strong>MLflow</strong> manages experiment tracking. - <strong>Airflow</strong> handles scheduling and orchestration, triggering tasks to run on the Solardetection Service. - This setup meets our current project needs without excessive overhead, aligning well with the constraints of a student account.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/c4_deployment.svg" class="img-fluid figure-img"></p>
+<figcaption>Deployment Diagram</figcaption>
+</figure>
+</div>
+</section>
+<section id="cross-cutting-concepts" class="level1">
+<h1>8. Cross-cutting Concepts</h1>
+<ul>
+<li>Solution to fetch dutch housing images with appropriate bounding box size (not done yet)</li>
+<li></li>
+</ul>
+</section>
+<section id="risks-and-technical-debt" class="level1">
+<h1>9. Risks and Technical Debt</h1>
+<p>Risks: - Training data is different format/and location than inference data =&gt; model might perform bad</p>
+<p>Technical Debts: - To reach the goal to have an automated process for data ingestion, inference data(dutch housing images), it is hard in the last step, to get the bounding box of exactly one house! Unclear what offset for the boundingbox to use for houses in different size​. Maybe calculated by size of house?</p>
+<hr>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

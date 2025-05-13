@@ -1,0 +1,747 @@
+[
+  {
+    "objectID": "docs/process_management/way_of_working.html",
+    "href": "docs/process_management/way_of_working.html",
+    "title": "Way of Working",
+    "section": "",
+    "text": "In this part we ‘Way of Working’ we have rewritten the rubrics for our self to make clear for us, how we can redefine the expectations into actions.\n\n\n\nScrum & Retrospectives for agile workflow.\nWeekly Client Meetings to showcase progress:\n\nPrepare slides with visuals.\nPresent burndown chart.\n\nProactive Client Communication:\n\nWrite an agenda for the next meeting.\n\n\n\n\n\n\nEnsure good code quality: readability, maintainability, safety, and performance.\nImplement unit testing & end-to-end testing in CI/CD.\nUse JupyterLab + Quarto for documentation with clear explanations.\n\n\n\n\n\nDefine vision and goals clearly.\nEnsure requirements are linked to goals and refined iteratively.\nDevelop scenarios based on requirements.\nDocument results & solutions to business problems.\n\n\n\n\n\nSpecify appropriate architecture to meet requirements, comparing relevant technologies.\nDesign a scalable, flexible, and robust pipeline.\n\n\n\n\n\nDeploy to the cloud for scalability.\nFully automated workflow for efficiency.\nFollow FAIR principles for responsible data handling.",
+    "crumbs": [
+      "Process Management",
+      "Way of Working"
+    ]
+  },
+  {
+    "objectID": "docs/process_management/way_of_working.html#process-management-12.5",
+    "href": "docs/process_management/way_of_working.html#process-management-12.5",
+    "title": "Way of Working",
+    "section": "",
+    "text": "Scrum & Retrospectives for agile workflow.\nWeekly Client Meetings to showcase progress:\n\nPrepare slides with visuals.\nPresent burndown chart.\n\nProactive Client Communication:\n\nWrite an agenda for the next meeting.",
+    "crumbs": [
+      "Process Management",
+      "Way of Working"
+    ]
+  },
+  {
+    "objectID": "docs/process_management/way_of_working.html#quality-control-12.5",
+    "href": "docs/process_management/way_of_working.html#quality-control-12.5",
+    "title": "Way of Working",
+    "section": "",
+    "text": "Ensure good code quality: readability, maintainability, safety, and performance.\nImplement unit testing & end-to-end testing in CI/CD.\nUse JupyterLab + Quarto for documentation with clear explanations.",
+    "crumbs": [
+      "Process Management",
+      "Way of Working"
+    ]
+  },
+  {
+    "objectID": "docs/process_management/way_of_working.html#analysis-20",
+    "href": "docs/process_management/way_of_working.html#analysis-20",
+    "title": "Way of Working",
+    "section": "",
+    "text": "Define vision and goals clearly.\nEnsure requirements are linked to goals and refined iteratively.\nDevelop scenarios based on requirements.\nDocument results & solutions to business problems.",
+    "crumbs": [
+      "Process Management",
+      "Way of Working"
+    ]
+  },
+  {
+    "objectID": "docs/process_management/way_of_working.html#technical-design-20",
+    "href": "docs/process_management/way_of_working.html#technical-design-20",
+    "title": "Way of Working",
+    "section": "",
+    "text": "Specify appropriate architecture to meet requirements, comparing relevant technologies.\nDesign a scalable, flexible, and robust pipeline.",
+    "crumbs": [
+      "Process Management",
+      "Way of Working"
+    ]
+  },
+  {
+    "objectID": "docs/process_management/way_of_working.html#realization-35",
+    "href": "docs/process_management/way_of_working.html#realization-35",
+    "title": "Way of Working",
+    "section": "",
+    "text": "Deploy to the cloud for scalability.\nFully automated workflow for efficiency.\nFollow FAIR principles for responsible data handling.",
+    "crumbs": [
+      "Process Management",
+      "Way of Working"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/technical_design.html",
+    "href": "docs/technical_functional_design/technical_design.html",
+    "title": "Technical Design",
+    "section": "",
+    "text": "This document is about the technical part of this solar detection project. What this project is about and what the goals and requirements are, is described extensively in the functional design. The technical design is documented using the arc42 template and will tailor it for this project if needed. The architectural diagrams should be in c4/mermaid. If you are currently reading this on pdf, you can switch to our hosted web-version for better readibility.",
+    "crumbs": [
+      "Project Documentation",
+      "Technical Design"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/technical_design.html#context-diagrams",
+    "href": "docs/technical_functional_design/technical_design.html#context-diagrams",
+    "title": "Technical Design",
+    "section": "3.1 Context Diagrams",
+    "text": "3.1 Context Diagrams\n\nSolar Panel Detection System - Context Diagram\n\n\n\nContext Diagram - Solarpanel Detection System\n\n\nThe Solar Panel Detection System is responsible for analyzing house images to detect solar panels. It also includes a lightweight data ingestion process (Python-based) that automatically fetches aerial images of Dutch houses from public services.\nKey Stakeholders and External Systems:\n\nStakeholders\n\nNijhuis Bouw (Client): Submits images for inference and checks detection results.\n\nExternal Services\n\nCommonDataFactory: Receives a city name and returns a list of addresses.\n\nBag Viewer Kadaster: Takes an address and provides the corresponding X, Y coordinates.\n\nPDOK Luchtfoto WMS: Takes X, Y coordinates and returns the aerial image of a house.\n\nData Storage for Results: Currently an Excel file (owned by Selin) that stores detection outputs alongside other project data (e.g., energy label calculations). A move to a more robust database solution is under consideration.",
+    "crumbs": [
+      "Project Documentation",
+      "Technical Design"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/technical_design.html#key-design-considerations",
+    "href": "docs/technical_functional_design/technical_design.html#key-design-considerations",
+    "title": "Technical Design",
+    "section": "Key Design Considerations",
+    "text": "Key Design Considerations\n\nAutomation & Reproducibility\nWe use an orchestration tool (e.g., Apache Airflow) to automatically schedule and run all pipelines, from scraping to inference.\nAccuracy & Domain Adaptation\nThe training data (Germany) differs from where inferences are run (the Netherlands). We plan to compare multiple detection frameworks (e.g., YOLO, Faster R-CNN). Thorough hyperparameter tuning is out of scope, but we aim for a robust initial baseline.\nHouse ID Linking\nAn internal subsystem queries Kadaster and PDOK APIs to map detected solar panels to Dutch addresses (BAG IDs). Results can then be merged into datasets used for energy label calculations.",
+    "crumbs": [
+      "Project Documentation",
+      "Technical Design"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/technical_design.html#detailed-approach",
+    "href": "docs/technical_functional_design/technical_design.html#detailed-approach",
+    "title": "Technical Design",
+    "section": "4.1 Detailed Approach",
+    "text": "4.1 Detailed Approach\n\n4.1.1 Continuous Training Pipeline\nThis pipeline manages how we train (and occasionally re-train) the solar panel detection model using labeled satellite images from Germany.\n\nData Ingestion & Versioning\n\nWhat We Do\n\nStore new training data (images + bounding box labels) in an object store (e.g., MinIO).\n\nConsider optionally using DVC or Git LFS for versioning.\n\n\nRationale\n\nEnsures reproducibility of training runs.\n\nStraightforward for the team to upload new data without manual overhead.\n\n\n\n\nData Validation\n\nOut of Scope\n\nWe are not performing extensive checks or anomaly detection.\n\nWe assume provided data is valid and labeled correctly.\n\n\n\n\nData Preprocessing\n\nWhat We Do\n\nMinimal or no preprocessing; possibly convert images to a uniform format (e.g., resizing, channel standardization).\n\n\nTechnologies\n\nOpenCV or Pillow for image transformations as needed.\n\n\n\n\nModel Training\n\nWhat We Do\n\nTrain an object detection model (likely YOLOv5 or Faster R-CNN) on the labeled German data.\n\nTrack basic performance metrics (e.g., accuracy, mAP) using MLflow.\n\n\nFocus\n\nAchieve a baseline model suitable for adaptation to Dutch imagery later.\n\nFull hyperparameter tuning is not included.\n\n\n\n\nModel Validation\n\nMinimal\n\nWe do log key metrics (precision, recall, mAP) on a small validation set.\n\nNo strict pass/fail criteria for automatic gating; we simply observe if training is successful.\n\n\n\n\nModel Deployment\n\nWhat We Do\n\nSave the trained model artifacts (weights, config) back to MinIO with a version label.\n\nThe model is then considered the “latest” for the inference pipeline to load.\n\n\n\n\nModel Feedback\n\nWhat We Do\n\nManual checks by developers or subject-matter experts.\n\nNo automated feedback loop or active learning in place at this time.\n\n\n\n\n\n\n4.1.2 Dutch Houses Scraping Process\nThis process retrieves real-world images from Dutch addresses, serving as the inference dataset source.\n\nInputs\n\nUser or automated trigger specifying a city name (e.g., “Enschede”).\n\n\nSteps\n\nAddress List: Fetch addresses from CommonDataFactory.\n\nCoordinate Lookup: For each address, query Kadaster (Bag Viewer) to obtain X/Y coordinates and BAG ID.\n\nDownload Aerial Images: Use PDOK Luchtfoto WMS to get top-down house images.\n\nStorage: Save each image in MinIO, tagged with its BAG ID.\n\n\nTechnologies\n\nPython Scripts (the “webscraper”), possibly run by Apache Airflow.\n\nRequests library for API calls; data stored in MinIO.\n\n\nOutcome\n\nA curated set of Dutch house images (with associated metadata) ready for the inference/detection process.\n\n\n\n\n\n4.1.3 Inference/Detection Process\nOnce we have Dutch house images and a trained model, we apply the detection logic to identify solar panels and associate them with BAG IDs.\n\nGathering New Images\n\nWhat We Do\n\nMonitor MinIO for newly scraped images.\n\nTriggered periodically (e.g., daily) by Airflow or on-demand by the user.\n\n\n\n\nModel Loading\n\nWhat We Do\n\nRetrieve the “latest” model artifact from MinIO.\n\nLoad weights and config into a YOLO or Faster R-CNN inference setup.\n\n\n\n\nRunning Detection\n\nSteps\n\nPerform solar panel detection on each image.\n\nExtract bounding boxes and confidence scores.\n\nMerge detection outcomes with existing house metadata (BAG ID).\n\nTechnologies\n\nPyTorch or TensorFlow-based detection libraries.\n\nMLflow can be used to log basic inference metrics if desired.\n\n\n\n\nStoring Results\n\nWhat We Do\n\nWrite final detection results (house ID, presence of solar panel, confidence) to a PostgreSQL table or a CSV.\n\nThese results can then be integrated with other datasets (e.g., energy labels).\n\nModel Feedback\n\nLargely manual. If users find inaccuracies, they inform developers for potential retraining or improvements.",
+    "crumbs": [
+      "Project Documentation",
+      "Technical Design"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/technical_design.html#comparing-technologies",
+    "href": "docs/technical_functional_design/technical_design.html#comparing-technologies",
+    "title": "Technical Design",
+    "section": "4.2.1 Comparing Technologies",
+    "text": "4.2.1 Comparing Technologies\n\nProgramming Language + API Framework\nFor choosing the programming language, we can keep the comparison short. Basically, we have the following requirements for choosing the programming language: - needs to have libraries, that can process data easily - needs to have libraries, that can train ML-Models (object detection) easily - needs to be well adopted and have big community, so we as newbies, can research if we are stuck with problems - needs to be compatible, with the work already made by selin and her knowledge - needs to have an API Framework\nLibraries and ability to build data pipelines: - Based on multiple sources, Python, R and Julia are the most used programming languages, which are widely used for data science purposes and that lets you build pipelines datacamp, Rice Engineering department of Computer Science, maryville education. Also a lot of them list sql, but sql is only a query language for relational datbases, and there you cannot actually build pipelines.\nCompatibility with our environment: - The scripts that selin provided to us, are python scripts, and selin, is most familiar with python.\nCommunity: - Based on the yearly Stackoverflow survey from 2024, 51% of the respondents uses python, 4.3% use R and only 1.1% use Julia.\nAPI-Framework availability: - All of the languages also have api frameworks e.g. FastAPI(Python), RestReserve(R), Genie(Julia)\n\nChoice\nBased on the research, we probably technically could develop this system using all of the languages and framework.\nBut in case of ease of implementation, we think python is best since it has the biggest community. Also, we will still need to choose other technologies, like Experiment tracking, Databases, etc. Therefore we need to choose a well adopted and wide spread programming language, that has well used libraries to use also the other technologies in combination with our chosen programming language.\nAlso Selin and both developers, are well known in python, and it makes it easier to work with selin. Also in the end, she needs to adapt our work for the future purposes of the NOWATT Project.\n\n\n\nObject Storage\nThis section follows our data-driven, step-by-step methodology for selecting the most suitable object storage solution. Given that our project involves managing a significant volume of image data and potentially large inference outputs, object storage is a critical component.\n\n\n\n1. Define Requirements\n\nScalability & Capacity\n\nMust handle potentially large volumes of images (satellite or otherwise).\n\nShould scale seamlessly as our dataset grows (especially if we anticipate adding data continuously).\n\nS3 Compatibility\n\nPrefer an S3-compatible interface for easy integration with common ML tools and data workflows.\n\nCost-Effectiveness\n\nSince this is a 10-week project with limited resources, we need to be mindful of budget and TCO (Total Cost of Ownership).\n\nEase of Integration\n\nShould integrate smoothly with the Python ecosystem, as well as any data versioning or orchestration tools.\n\nReliability & Availability\n\nMust ensure data durability (backups, replication) and consistent uptime for training/inference pipelines.\n\n\n\n\n\n2. Establish Evaluation Criteria\n\n\n\n\n\n\n\nCriterion\nDescription\n\n\n\n\nScalability\nAbility to handle increasing data volumes without major overhead\n\n\nPerformance\nRead/write speeds, especially with large file sizes\n\n\nS3 Compatibility\nSupport for S3 APIs or compatible SDKs\n\n\nIntegration\nEase of connecting with ML frameworks, data versioning tools\n\n\nCost\nPricing model (storage, egress), licensing fees if any\n\n\nSecurity & Compliance\nBuilt-in encryption, IAM, access control, compliance certifications\n\n\nMaintainability\nOverhead for setup, updates, and ongoing management\n\n\nReferences / Adoption\nCommunity usage, official documentation, case studies\n\n\n\n\n\n\n3. Candidate Solutions\nBelow is a brief comparison of four commonly considered object storage options:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nObject Storage\nScalability\nPerformance\nS3 Compatibility\nIntegration\nCost\nSecurity & Compliance\nMaintainability\nReferences / Adoption\n\n\n\n\nMinIO\nHorizontally scalable; can run on-prem or cloud\nGenerally good; comparable to AWS S3 for typical workloads\nS3-compatible API\nStrong Python support, easy to connect with ML libraries\nSelf-hosted (infrastructure costs), no license fees\nSupports encryption, IAM, compliance depends on self-setup\nMedium (requires some DevOps)\nPopular in self-managed & hybrid deployments\n\n\nAWS S3\nVirtually unlimited scale, managed by AWS\nHigh performance, global availability\nNative S3\nExcellent Python SDK (boto3), wide tool integration\nPay-as-you-go; can become costly for high egress\nFull compliance suite (e.g., SOC, HIPAA) with managed IAM\nLow (fully managed)\nIndustry-standard, widely adopted\n\n\nAzure Blob\nScales with Azure platform\nSimilar to S3 in performance\nNot S3 by default, but can use bridging tools\nGood integration with Azure ML, Python SDK\nPay-as-you-go; egress fees apply\nOffers enterprise compliance, robust role-based access\nLow (fully managed, if on Azure)\nPopular in Microsoft-centric ecosystems\n\n\nGCP Storage\nScales with Google Cloud\nHigh performance, multi-region support\nXML/JSON API, not S3 out-of-the-box, but partial compatibility\nPython SDK (google-cloud-storage)\nPay-as-you-go; egress fees apply\nComprehensive security features, compliance certifications\nLow (fully managed, if on GCP)\nPopular in Google Cloud ML solutions\n\n\n\n\n\n\n4. Gathering Data from Sources\n\nOfficial Documentation\n\nExamined feature guides and reference architectures from MinIO, AWS, Azure, and GCP.\n\n\nCommunity Benchmarks & Case Studies\n\nLooked at performance benchmarks published by open-source communities (e.g., comparing MinIO vs. AWS S3 for throughput).\n\nReviewed real-world case studies indicating the ease of integration with Python-based ML flows.\n\nIndustry & Team Constraints\n\nConsidered the team’s DevOps expertise and budget constraints for a short 10-week project.\n\n\n\n\n\n5. Preliminary Observations\n\nMinIO is self-hosted and works well for on-prem or hybrid environments, providing S3 compatibility at minimal licensing cost. However, it requires more DevOps effort than fully managed cloud services.\nAWS S3, Azure Blob, and GCP Storage are managed services offering high reliability and easy integration, but cost can escalate with large-scale storage or high egress traffic.\nGiven we have a 10-week timeline, choosing a fully managed solution might reduce operational overhead—unless there is an existing on-prem requirement or preference.\n\nIn the next section, we will finalize our object storage selection and outline the rationale behind that choice. We’ll also consider the project’s specific constraints (e.g., budget, DevOps capabilities, data growth projections) to arrive at a balanced, practical decision.\n\n\nData Versioning Tool\n\n\nStorage for Result Data\n\n\nML Expriment Tracking Tool\n\n\nCloud Platform\n\n\nOrchestration / Automation Tool",
+    "crumbs": [
+      "Project Documentation",
+      "Technical Design"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/technical_design.html#selected-technologies",
+    "href": "docs/technical_functional_design/technical_design.html#selected-technologies",
+    "title": "Technical Design",
+    "section": "4.2.2 Selected Technologies",
+    "text": "4.2.2 Selected Technologies",
+    "crumbs": [
+      "Project Documentation",
+      "Technical Design"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/technical_design.html#container-view",
+    "href": "docs/technical_functional_design/technical_design.html#container-view",
+    "title": "Technical Design",
+    "section": "5.1 Container View",
+    "text": "5.1 Container View\n\n\n\nContainer Diagram - Solarpanel Detection System\n\n\nThe diagram above shows the internal structure of the Solar Panel Detection System and how it interacts with external systems and users:\n\nAirflow orchestrates the entire pipeline by scheduling scraping, training, and inference tasks.\nSolardetection Service performs data collection (addresses, imagery), model training, and batch inference. It acts as the core logic of the system.\nSolardetection API (FastAPI) provides real-time detection by accepting uploaded images and returning predictions. It loads the latest trained model artifacts (from MinIO) and may reuse inference logic from the pipeline.\nMLflow is used by the pipeline to log experiments, including parameters, metrics, and models. It stores metadata in PostgreSQL.\nPostgreSQL serves as a central relational database for both MLflow metadata and detection results. It is written to by both the pipeline and MLflow.\nMinIO serves as an object storage system. The pipeline stores input images and trained model artifacts here. FastAPI retrieves model artifacts from MinIO for real-time predictions.\n\n\nExternal Systems\n\nCommonDataFactory provides addresses for a given city.\nBag Viewer Kadaster resolves addresses to geographic coordinates.\nPDOK returns aerial images for given coordinates.\nData Storage for Results (CSV) is an external file where final batch detection results are exported. It contains additional house-level energy data and may be merged into the PostgreSQL database in the future.\nNijhuis Bouw is the external user who uploads house images and retrieves detection results via the API.",
+    "crumbs": [
+      "Project Documentation",
+      "Technical Design"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/technical_design.html#component-view",
+    "href": "docs/technical_functional_design/technical_design.html#component-view",
+    "title": "Technical Design",
+    "section": "5.2 Component View",
+    "text": "5.2 Component View\nBelow, we focus on three key containers that make up our system: the Solarpanel Detection Service, MLflow, and Airflow. Other containers are either external services or less critical for this architectural overview.\n\n5.2.1 Solarpanel Detection Service Container\nThe diagram below shows the Solarpanel Detection Service container broken down into three internal components (or pipelines). We’ve removed textual annotations on the relationships to keep the view concise. Each pipeline handles a specific part of the data flow:\n\nContinous Training Pipeline\nThis is the primary pipeline for continually training the model. Whenever new training data arrives, it runs the full training process, tracking performance and metadata in MLflow. It also deploys any newly trained model.\nInference Process\nWhen new data (e.g., images) is uploaded, this pipeline uses the latest model to detect solar panels, then stores the results in PostgreSQL.\nData Ingestion Process\nSince manually collecting Dutch aerial imagery is impractical, the Data Ingestion component automates data retrieval. After a user specifies a city, it fetches relevant housing addresses, their coordinates, and associated aerial images. Each house image is tied to a unique House ID, enabling the detection results to be merged with existing energy-related data.\n\nThe following diagram highlights these three pipelines within the Solarpanel Detection Service. For details about each pipeline’s runtime flow, see Chapter 6.\n\n\n\nComponent Diagram - Solarpanel Detection Container\n\n\n\n\n5.2.2 MlFlow Container\nMLflow lists the following components that can be used on their documentation.: - MLflow Tracking - MLflow Projects - MLflow Models - MLflow Registry\nFor this project only MLflow Tracking is used. Here is a brief description of what MLflow tracking is from their website: &gt; MLflow Tracking is an API and UI for logging parameters, code versions, metrics, and artifacts when running your machine learning code and &gt; for later visualizing the results. You can use MLflow Tracking in any environment (for example, a standalone script or a notebook) to log &gt; results to local files or to a server, then compare multiple runs. Teams can also use it to compare results from different users.\n\n\n\nComponent Diagram - MLflow Container\n\n\n\n\n5.2.3 Airflow Container\nThe Airflow website provides a detailed component diagram of Airflow: https://airflow.apache.org/docs/apache-airflow/2.5.3/core-concepts/overview.html.\nIn our project, Airflow schedules tasks (defined in DAGs) to run the Python scripts that implement our solar panel detection logic. Specifically:\n\nDAG Files (Directed Acyclic Graph files) define tasks and dependencies, telling Airflow what to run and when.\n\nWorkers (spawned by the Executor) then execute these tasks. When a task is triggered, the Worker loads and runs our Python code, which in turn calls out to the Solar Panel Detection Service.\n\nIn other words, the DAG files serve as the Airflow “recipe” for orchestrating our solar panel detection scripts; the scripts themselves live in our codebase (deployed to the Airflow environment) and are executed on Airflow Workers.",
+    "crumbs": [
+      "Project Documentation",
+      "Technical Design"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/technical_design.html#data-ingestion-process",
+    "href": "docs/technical_functional_design/technical_design.html#data-ingestion-process",
+    "title": "Technical Design",
+    "section": "6.1 Data Ingestion Process",
+    "text": "6.1 Data Ingestion Process\n\n\n\nC4 dynamic diagram for scraping inference data\n\n\nThe Data Ingestion process begins when Nijhuis provides a city name to the Solardetection API. The API delegates the request to the Data Ingestion component within the Solardetection Service, which then interacts with various external services:\n\nCommonDataFactory – Provides a comprehensive list of addresses for the city.\n\nBag Viewer Kadaster – Translates each address into X,Y coordinates and returns a unique House ID.\n\nPDOK Luchtfoto WMS – Retrieves aerial imagery for each address, using the provided coordinates.\n\nAs shown in the diagram, the Data Ingestion component stores retrieved images in MinIO (S3-compatible API). This ensures the images can be readily accessed by subsequent steps or other pipelines.\nOptional Inference Trigger\nOnce the ingestion process completes and the data is saved (in both the database and MinIO), you can manually initiate the Inference Pipeline (or have it triggered automatically if desired). This follow-up stage uses the newly gathered images and metadata to detect solar panels, as part of your broader data processing workflow.",
+    "crumbs": [
+      "Project Documentation",
+      "Technical Design"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/technical_design.html#training-pipeline",
+    "href": "docs/technical_functional_design/technical_design.html#training-pipeline",
+    "title": "Technical Design",
+    "section": "6.2 Training Pipeline",
+    "text": "6.2 Training Pipeline\n\n\n\nC4 dynamic diagram for training pipeline\n\n\nThe Training Pipeline ensures that new or updated training data (images and labels) can be processed seamlessly to produce a refreshed solar panel detection model. Here’s an overview of the main steps:\n\nData Upload\nA user (e.g., Nijhuis) manually places new training images and metadata in the MinIO object store.\nAirflow Orchestration\nAn Airflow DAG (the Training DAG) periodically checks the relevant MinIO bucket. If new data is present, it triggers the Training Pipeline within the Solardetection Service.\nModel Training\nThe Training Pipeline retrieves the images from MinIO, runs the training process (e.g., YOLO or another ML framework), and collects metrics (accuracy, loss, etc.).\nLogging and Versioning\nTraining metrics and model parameters are logged in MLflow for future reference. The newly trained model artifact is also stored back into MinIO under a versioned location.\nMetadata Storage\nFinally, relevant training run details (e.g., model version, timestamp) are written to PostgreSQL. This allows easy tracking of which model was trained under specific conditions.\n\nBy automating these steps, the pipeline helps maintain an up-to-date model with minimal manual oversight, ensuring detection accuracy improves over time.",
+    "crumbs": [
+      "Project Documentation",
+      "Technical Design"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/technical_design.html#inference-pipeline",
+    "href": "docs/technical_functional_design/technical_design.html#inference-pipeline",
+    "title": "Technical Design",
+    "section": "6.3 Inference Pipeline",
+    "text": "6.3 Inference Pipeline\nBelow is the dynamic diagram detailing how new inference images are processed by the system to detect solar panels:\n\n\n\nC4 dynamic diagram for detecting solar panel\n\n\n\nManual Upload\nNijhuis (the user) manually places new inference images in the MinIO inference bucket via an S3-compatible interface.\nAirflow Inference DAG\nAn Inference DAG within Airflow checks this bucket daily (or on a specified schedule). Once it detects newly uploaded images, it triggers the inference pipeline.\nInference Execution\nThe Inference Pipeline component in the Solardetection Service loads the YOLO model and any required files from MinIO. It processes the images to detect solar panels (bounding boxes, confidence scores, etc.).\nResults Storage\nUpon completion, the pipeline stores the detection results in PostgreSQL.\n\nThis automated setup allows the system to routinely scan for and process newly uploaded images without manual monitoring—beyond the initial image upload by the user.",
+    "crumbs": [
+      "Project Documentation",
+      "Technical Design"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/detailed_descriptions/mlflow_yolo_integration.html",
+    "href": "docs/technical_functional_design/detailed_descriptions/mlflow_yolo_integration.html",
+    "title": "MLflow Integration for YOLO Solar Panel Detection",
+    "section": "",
+    "text": "This document describes the integration of YOLO object detection models with MLflow for tracking experiments, storing artifacts, and managing model versions for the Solar Panel Detection project.\n\n\nThe YOLO (You Only Look Once) model is used to detect solar panels in satellite imagery. We’ve integrated this with MLflow to:\n\nTrack training parameters and metrics\nVersion control model artifacts\nSimplify model deployment\nEnable experiment comparisons\n\n\n\n\ngraph TD\n    A[Training Data] --&gt; B[YOLO Training Script]\n    B --&gt; C[MLflow Tracking Server]\n    C --&gt; D[MLflow Model Registry]\n    D --&gt; E[Inference/Prediction]\n    C --&gt; F[Metrics & Artifacts]\n\n\n\n\n\nMLflow is used to track:\n\nParameters: YOLO model type, epochs, batch size, image size, etc.\nMetrics: mAP50, mAP50-95, precision, recall, loss values\nArtifacts: Model weights, confusion matrices, PR curves\nModel Registry: Version control of trained models\n\n\n\n\nThe training process has been encapsulated in a Python script (train_yolo.py) that handles:\n\nSetting up MLflow tracking\nLoading and preprocessing the dataset\nTraining the YOLO model\nLogging parameters, metrics, and artifacts to MLflow\nRegistering the best model in MLflow’s model registry\n\n# Example of starting a training run\npython src/traintest/train_yolo.py --data_dir SateliteData --model yolov8n.pt --epochs 50 --batch 16 --img_size 832\n\n\n\nThe prediction script (predict_mlflow.py) can:\n\nLoad models directly from MLflow’s model registry\nUse the model for inference on new images\nVisualize and save detection results\n\n# Example of running inference with the latest model from the registry\npython src/traintest/predict_mlflow.py --image path/to/image.jpg\n\n\n\n\n\n\nThe data.yaml file defines the dataset structure:\n# Path to dataset root\npath: SateliteData\n\n# Train/val/test splits\ntrain: train/images\nval: val/images\ntest: test/images\n\n# Class names\nnames:\n  0: solar_panel\n  1: solar_array\n  2: roof_array\n\n# Number of classes\nnc: 3\n\n\n\nThe training script (train_yolo.py) handles:\n\nMLflow experiment setup\nYOLO model initialization and training\nLogging metrics, parameters, and artifacts\nModel registration\n\n\n\n\nThe prediction script (predict_mlflow.py) allows:\n\nLoading models from MLflow\nRunning inference on new images\nVisualizing and saving results\n\n\n\n\n\n\nExperiment Naming: Use consistent naming conventions for experiments\nModel Versioning: Register important models with semantic versions\nArtifact Management: Store important artifacts like confusion matrices\nParameter Tracking: Log all relevant hyperparameters\n\n\n\n\n\n\n# Basic training with default parameters\npython src/traintest/train_yolo.py\n\n# Custom training\npython src/traintest/train_yolo.py --model yolov8m.pt --epochs 100 --batch 8\n\n\n\n# Using the latest model from registry\npython src/traintest/predict_mlflow.py --image path/to/image.jpg\n\n# Using a specific MLflow run\npython src/traintest/predict_mlflow.py --image path/to/image.jpg --run_id &lt;mlflow_run_id&gt;\n\n# Using a local model file\npython src/traintest/predict_mlflow.py --image path/to/image.jpg --local_model path/to/model.pt\n\n\n\nAccess the MLflow UI at: http://localhost:5000\n\n\n\n\n\nIntegration with Airflow for scheduled training\nA/B testing framework for model comparison\nAutomated model promotion based on performance metrics\nIntegration with deployment pipelines"
+  },
+  {
+    "objectID": "docs/technical_functional_design/detailed_descriptions/mlflow_yolo_integration.html#overview",
+    "href": "docs/technical_functional_design/detailed_descriptions/mlflow_yolo_integration.html#overview",
+    "title": "MLflow Integration for YOLO Solar Panel Detection",
+    "section": "",
+    "text": "The YOLO (You Only Look Once) model is used to detect solar panels in satellite imagery. We’ve integrated this with MLflow to:\n\nTrack training parameters and metrics\nVersion control model artifacts\nSimplify model deployment\nEnable experiment comparisons"
+  },
+  {
+    "objectID": "docs/technical_functional_design/detailed_descriptions/mlflow_yolo_integration.html#system-architecture",
+    "href": "docs/technical_functional_design/detailed_descriptions/mlflow_yolo_integration.html#system-architecture",
+    "title": "MLflow Integration for YOLO Solar Panel Detection",
+    "section": "",
+    "text": "graph TD\n    A[Training Data] --&gt; B[YOLO Training Script]\n    B --&gt; C[MLflow Tracking Server]\n    C --&gt; D[MLflow Model Registry]\n    D --&gt; E[Inference/Prediction]\n    C --&gt; F[Metrics & Artifacts]"
+  },
+  {
+    "objectID": "docs/technical_functional_design/detailed_descriptions/mlflow_yolo_integration.html#implementation-details",
+    "href": "docs/technical_functional_design/detailed_descriptions/mlflow_yolo_integration.html#implementation-details",
+    "title": "MLflow Integration for YOLO Solar Panel Detection",
+    "section": "",
+    "text": "MLflow is used to track:\n\nParameters: YOLO model type, epochs, batch size, image size, etc.\nMetrics: mAP50, mAP50-95, precision, recall, loss values\nArtifacts: Model weights, confusion matrices, PR curves\nModel Registry: Version control of trained models\n\n\n\n\nThe training process has been encapsulated in a Python script (train_yolo.py) that handles:\n\nSetting up MLflow tracking\nLoading and preprocessing the dataset\nTraining the YOLO model\nLogging parameters, metrics, and artifacts to MLflow\nRegistering the best model in MLflow’s model registry\n\n# Example of starting a training run\npython src/traintest/train_yolo.py --data_dir SateliteData --model yolov8n.pt --epochs 50 --batch 16 --img_size 832\n\n\n\nThe prediction script (predict_mlflow.py) can:\n\nLoad models directly from MLflow’s model registry\nUse the model for inference on new images\nVisualize and save detection results\n\n# Example of running inference with the latest model from the registry\npython src/traintest/predict_mlflow.py --image path/to/image.jpg"
+  },
+  {
+    "objectID": "docs/technical_functional_design/detailed_descriptions/mlflow_yolo_integration.html#key-components",
+    "href": "docs/technical_functional_design/detailed_descriptions/mlflow_yolo_integration.html#key-components",
+    "title": "MLflow Integration for YOLO Solar Panel Detection",
+    "section": "",
+    "text": "The data.yaml file defines the dataset structure:\n# Path to dataset root\npath: SateliteData\n\n# Train/val/test splits\ntrain: train/images\nval: val/images\ntest: test/images\n\n# Class names\nnames:\n  0: solar_panel\n  1: solar_array\n  2: roof_array\n\n# Number of classes\nnc: 3\n\n\n\nThe training script (train_yolo.py) handles:\n\nMLflow experiment setup\nYOLO model initialization and training\nLogging metrics, parameters, and artifacts\nModel registration\n\n\n\n\nThe prediction script (predict_mlflow.py) allows:\n\nLoading models from MLflow\nRunning inference on new images\nVisualizing and saving results"
+  },
+  {
+    "objectID": "docs/technical_functional_design/detailed_descriptions/mlflow_yolo_integration.html#best-practices",
+    "href": "docs/technical_functional_design/detailed_descriptions/mlflow_yolo_integration.html#best-practices",
+    "title": "MLflow Integration for YOLO Solar Panel Detection",
+    "section": "",
+    "text": "Experiment Naming: Use consistent naming conventions for experiments\nModel Versioning: Register important models with semantic versions\nArtifact Management: Store important artifacts like confusion matrices\nParameter Tracking: Log all relevant hyperparameters"
+  },
+  {
+    "objectID": "docs/technical_functional_design/detailed_descriptions/mlflow_yolo_integration.html#how-to-use",
+    "href": "docs/technical_functional_design/detailed_descriptions/mlflow_yolo_integration.html#how-to-use",
+    "title": "MLflow Integration for YOLO Solar Panel Detection",
+    "section": "",
+    "text": "# Basic training with default parameters\npython src/traintest/train_yolo.py\n\n# Custom training\npython src/traintest/train_yolo.py --model yolov8m.pt --epochs 100 --batch 8\n\n\n\n# Using the latest model from registry\npython src/traintest/predict_mlflow.py --image path/to/image.jpg\n\n# Using a specific MLflow run\npython src/traintest/predict_mlflow.py --image path/to/image.jpg --run_id &lt;mlflow_run_id&gt;\n\n# Using a local model file\npython src/traintest/predict_mlflow.py --image path/to/image.jpg --local_model path/to/model.pt\n\n\n\nAccess the MLflow UI at: http://localhost:5000"
+  },
+  {
+    "objectID": "docs/technical_functional_design/detailed_descriptions/mlflow_yolo_integration.html#future-improvements",
+    "href": "docs/technical_functional_design/detailed_descriptions/mlflow_yolo_integration.html#future-improvements",
+    "title": "MLflow Integration for YOLO Solar Panel Detection",
+    "section": "",
+    "text": "Integration with Airflow for scheduled training\nA/B testing framework for model comparison\nAutomated model promotion based on performance metrics\nIntegration with deployment pipelines"
+  },
+  {
+    "objectID": "docs/process_management/cicd_usage_guide.html",
+    "href": "docs/process_management/cicd_usage_guide.html",
+    "title": "Using GitLab CI/CD",
+    "section": "",
+    "text": "This guide provides a quick overview of how to use the GitLab CI/CD pipeline we’ve set up for the Automatic Solar Panel Detection project.\n\n\n\n\nThe GitLab CI/CD pipeline automatically runs when:\n\nYou push changes to the main branch\nYou create and push a tag\nYou open or update a merge request\n\n\n\n\nBefore pushing your changes to trigger the pipeline, you can test locally:\n\nUsing Docker Compose:\ndocker-compose -f docker-compose.test.yml up\nUsing the test_ci.py script:\npython test_ci.py\nRunning tests manually:\npip install pytest flake8\nflake8 src/ --max-line-length=120\npython -m pytest src/ -v\n\n\n\n\n\n\n\nYou can check the status of your pipeline in GitLab:\n\nGo to CI/CD &gt; Pipelines\nLook for your branch or commit in the list\nCheck the status icon:\n\nGreen ✓: All jobs passed\nRed ✗: One or more jobs failed\nYellow clock: Pipeline is running\n\n\n\n\n\nIf a job fails:\n\nClick on the failed pipeline\nClick on the failed job\nCheck the job logs for error messages\nFix the issues in your local repository\nPush the changes to trigger a new pipeline run\n\n\n\n\n\n\n\nIssue: Tests are failing in the pipeline\nSolution: 1. Check the test logs for specific failures 2. Run the tests locally using python -m pytest src/ -v 3. Fix the failing tests 4. Verify locally before pushing again\n\n\n\nIssue: Flake8 is reporting code style issues\nSolution: 1. Run flake8 locally: flake8 src/ --max-line-length=120 2. Fix the reported issues, such as: - Add missing newlines at the end of files - Remove trailing whitespace - Fix indentation - Remove unused imports 3. Verify locally before pushing again\n\n\n\nIssue: Docker image build fails\nSolution: 1. Check if you can build the Docker image locally: docker build -t solar-panel-detection:local . 2. Check for syntax errors in your Dockerfile 3. Ensure all required files are committed 4. Verify dependencies are correctly specified\n\n\n\nIssue: Deployment to staging or production fails\nSolution: 1. Check the SSH configuration in GitLab CI/CD variables 2. Verify the deployment server is accessible 3. Check if the required directories exist on the server 4. Test the deployment commands manually on the server\n\n\n\n\n\nAlways run tests locally before pushing changes\nKeep commits small and focused to make debugging easier\nReview pipeline results for every push\nFix failures promptly to avoid blocking other team members\nAdd tests for new features and bug fixes\nUpdate documentation when making significant changes\n\n\n\n\nTo add new tests to the pipeline:\n\nCreate test files in the src/tests/ directory\nFollow the naming convention: test_*.py\nUse pytest fixtures and parameterization when appropriate\nRun the tests locally to verify they work\nPush the changes to trigger the pipeline\n\n\n\n\nThe GitLab CI/CD pipeline helps ensure code quality and automated deployment. By following this guide, you can effectively use the pipeline to maintain high standards in your development process."
+  },
+  {
+    "objectID": "docs/process_management/cicd_usage_guide.html#how-to-run-the-cicd-pipeline",
+    "href": "docs/process_management/cicd_usage_guide.html#how-to-run-the-cicd-pipeline",
+    "title": "Using GitLab CI/CD",
+    "section": "",
+    "text": "The GitLab CI/CD pipeline automatically runs when:\n\nYou push changes to the main branch\nYou create and push a tag\nYou open or update a merge request\n\n\n\n\nBefore pushing your changes to trigger the pipeline, you can test locally:\n\nUsing Docker Compose:\ndocker-compose -f docker-compose.test.yml up\nUsing the test_ci.py script:\npython test_ci.py\nRunning tests manually:\npip install pytest flake8\nflake8 src/ --max-line-length=120\npython -m pytest src/ -v"
+  },
+  {
+    "objectID": "docs/process_management/cicd_usage_guide.html#understanding-pipeline-results",
+    "href": "docs/process_management/cicd_usage_guide.html#understanding-pipeline-results",
+    "title": "Using GitLab CI/CD",
+    "section": "",
+    "text": "You can check the status of your pipeline in GitLab:\n\nGo to CI/CD &gt; Pipelines\nLook for your branch or commit in the list\nCheck the status icon:\n\nGreen ✓: All jobs passed\nRed ✗: One or more jobs failed\nYellow clock: Pipeline is running\n\n\n\n\n\nIf a job fails:\n\nClick on the failed pipeline\nClick on the failed job\nCheck the job logs for error messages\nFix the issues in your local repository\nPush the changes to trigger a new pipeline run"
+  },
+  {
+    "objectID": "docs/process_management/cicd_usage_guide.html#common-pipeline-issues-and-solutions",
+    "href": "docs/process_management/cicd_usage_guide.html#common-pipeline-issues-and-solutions",
+    "title": "Using GitLab CI/CD",
+    "section": "",
+    "text": "Issue: Tests are failing in the pipeline\nSolution: 1. Check the test logs for specific failures 2. Run the tests locally using python -m pytest src/ -v 3. Fix the failing tests 4. Verify locally before pushing again\n\n\n\nIssue: Flake8 is reporting code style issues\nSolution: 1. Run flake8 locally: flake8 src/ --max-line-length=120 2. Fix the reported issues, such as: - Add missing newlines at the end of files - Remove trailing whitespace - Fix indentation - Remove unused imports 3. Verify locally before pushing again\n\n\n\nIssue: Docker image build fails\nSolution: 1. Check if you can build the Docker image locally: docker build -t solar-panel-detection:local . 2. Check for syntax errors in your Dockerfile 3. Ensure all required files are committed 4. Verify dependencies are correctly specified\n\n\n\nIssue: Deployment to staging or production fails\nSolution: 1. Check the SSH configuration in GitLab CI/CD variables 2. Verify the deployment server is accessible 3. Check if the required directories exist on the server 4. Test the deployment commands manually on the server"
+  },
+  {
+    "objectID": "docs/process_management/cicd_usage_guide.html#best-practices",
+    "href": "docs/process_management/cicd_usage_guide.html#best-practices",
+    "title": "Using GitLab CI/CD",
+    "section": "",
+    "text": "Always run tests locally before pushing changes\nKeep commits small and focused to make debugging easier\nReview pipeline results for every push\nFix failures promptly to avoid blocking other team members\nAdd tests for new features and bug fixes\nUpdate documentation when making significant changes"
+  },
+  {
+    "objectID": "docs/process_management/cicd_usage_guide.html#adding-new-tests",
+    "href": "docs/process_management/cicd_usage_guide.html#adding-new-tests",
+    "title": "Using GitLab CI/CD",
+    "section": "",
+    "text": "To add new tests to the pipeline:\n\nCreate test files in the src/tests/ directory\nFollow the naming convention: test_*.py\nUse pytest fixtures and parameterization when appropriate\nRun the tests locally to verify they work\nPush the changes to trigger the pipeline"
+  },
+  {
+    "objectID": "docs/process_management/cicd_usage_guide.html#conclusion",
+    "href": "docs/process_management/cicd_usage_guide.html#conclusion",
+    "title": "Using GitLab CI/CD",
+    "section": "",
+    "text": "The GitLab CI/CD pipeline helps ensure code quality and automated deployment. By following this guide, you can effectively use the pipeline to maintain high standards in your development process."
+  },
+  {
+    "objectID": "docs/process_management/cicd_pipeline.html",
+    "href": "docs/process_management/cicd_pipeline.html",
+    "title": "CI/CD Pipeline",
+    "section": "",
+    "text": "This document outlines our approach to Continuous Integration and Continuous Deployment (CI/CD) for the Automatic Solar Panel Detection project. We’ll cover the rationale behind our choices, the configuration details, and step-by-step instructions for setting up the pipeline.\n\n\nContinuous Integration and Continuous Deployment (CI/CD) is a method to frequently deliver apps to customers by introducing automation into the stages of app development. The main concepts attributed to CI/CD are continuous integration, continuous delivery, and continuous deployment.\n\nContinuous Integration (CI): Developers merge their changes back to the main branch as often as possible. The developer’s changes are validated by creating a build and running automated tests against the build.\nContinuous Delivery (CD): An extension of continuous integration to make sure that new changes can be released to customers quickly in a sustainable way.\nContinuous Deployment: Every change that passes all stages of your production pipeline is released to your customers. There’s no human intervention, and only a failed test will prevent a new change to be deployed to production.\n\n\n\n\nFor our project, we chose GitLab CI/CD for the following reasons:\n\nIntegrated Solution: GitLab provides an all-in-one solution for source code management, CI/CD, and issue tracking, reducing the need for additional tools.\nDocker Integration: GitLab CI/CD has robust Docker integration, which works well with our containerized application architecture.\nPipeline as Code: With GitLab, we define our pipeline in a .gitlab-ci.yml file that lives with our code, providing versioning and change tracking for our deployment process.\nEnvironments: GitLab’s environment feature helps us manage deployments to different environments (staging, production) and track what version is deployed where.\nArtifacts: GitLab makes it easy to pass build artifacts between stages, which is useful for our ML model deployment process.\n\n\n\n\nOur CI/CD pipeline consists of four main stages:\n\n\nThe test stage ensures code quality through:\n\nLinting: Checking code style and potential issues\nUnit Testing: Testing individual components\nIntegration Testing: Testing component interactions\n\n\n\n\nThe build stage creates deployable artifacts:\n\nDocker Image: Packaging our application\nPush to Registry: Making images available for deployment\n\n\n\n\nThe deploy stage manages deployment to different environments:\n\nStaging: Automatic deployment for testing\nProduction: Manual deployment for controlled releases\n\n\n\n\nThe pages stage publishes documentation:\n\nQuarto Rendering: Converting our Quarto documents to HTML\nPublication: Making documentation available via GitLab Pages\n\n\n\n\n\nWe selected Flake8 for linting our Python code after comparing several alternatives:\n\n\n\n\n\n\n\n\n\nTool\nPros\nCons\nDecision Rationale\n\n\n\n\nFlake8\n- Combines PyFlakes, pycodestyle, and McCabe- Fast execution- Highly configurable- Well-established in Python community\n- Less comprehensive than some alternatives- Doesn’t auto-fix issues\nSELECTED- Good balance between speed and functionality- Easy integration with GitLab CI\n\n\nPylint\n- Very comprehensive checks- Detailed reports- Highly configurable\n- Slow execution- Sometimes too strict- Can produce false positives\nNot selected due to slower performance and potentially excessive strictness\n\n\nBlack\n- Auto-formats code- Minimal configuration needed- Consistent formatting\n- Not a linter (only formats)- Limited configuration options- Opinionated style\nConsidered as a complementary tool, but not as our primary quality check\n\n\nRuff\n- Very fast (Rust-based)- Compatible with Flake8 rules- Can auto-fix some issues\n- Relatively new- Less established ecosystem\nPromising but avoided due to its relative newness\n\n\n\n\n\n\n\n\nOur pipeline is defined in the .gitlab-ci.yml file at the root of our repository. It includes all the stages, jobs, and configurations needed for our CI/CD process.\nstages:\n  - test\n  - build\n  - deploy\n  - pages\n\nvariables:\n  DOCKER_DRIVER: overlay2\n  DOCKER_TLS_CERTDIR: \"\"\n  DOCKER_HOST: tcp://docker:2375\n  IMAGE_NAME: ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}\n\n# Test stage jobs\ntest:\n  stage: test\n  image: python:3.9\n  before_script:\n    - pip install -r requirements.txt\n    - pip install pytest flake8\n  script:\n    - flake8 src/ --max-line-length=120\n    - python -m pytest src/\n\n# Build stage jobs\nbuild:\n  stage: build\n  image: docker:20.10.16\n  services:\n    - docker:20.10.16-dind\n  before_script:\n    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY\n  script:\n    - docker build -t $IMAGE_NAME .\n    - docker push $IMAGE_NAME\n  only:\n    - main\n    - tags\n\n# Deploy stage jobs\ndeploy_staging:\n  stage: deploy\n  image: alpine:latest\n  before_script:\n    - apk add --no-cache openssh-client\n    - eval $(ssh-agent -s)\n    - echo \"$SSH_PRIVATE_KEY\" | tr -d '\\r' | ssh-add -\n    - mkdir -p ~/.ssh\n    - echo \"$SSH_KNOWN_HOSTS\" &gt; ~/.ssh/known_hosts\n    - chmod 644 ~/.ssh/known_hosts\n  script:\n    - ssh $STAGING_SERVER_USER@$STAGING_SERVER_HOST \"cd /path/to/deployment && docker-compose pull && docker-compose up -d\"\n  environment:\n    name: staging\n  only:\n    - main\n\ndeploy_production:\n  stage: deploy\n  image: alpine:latest\n  before_script:\n    - apk add --no-cache openssh-client\n    - eval $(ssh-agent -s)\n    - echo \"$SSH_PRIVATE_KEY\" | tr -d '\\r' | ssh-add -\n    - mkdir -p ~/.ssh\n    - echo \"$SSH_KNOWN_HOSTS\" &gt; ~/.ssh/known_hosts\n    - chmod 644 ~/.ssh/known_hosts\n  script:\n    - ssh $PRODUCTION_SERVER_USER@$PRODUCTION_SERVER_HOST \"cd /path/to/deployment && docker-compose pull && docker-compose up -d\"\n  environment:\n    name: production\n  only:\n    - tags\n  when: manual\n\n# Pages stage jobs\npages:\n  stage: pages\n  image: ghcr.io/quarto-dev/quarto-full:latest\n  before_script:\n    - tlmgr option repository http://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2024/tlnet-final\n    - tlmgr update --self --verify-repo=none\n    - tlmgr install beamer caption soul koma-script --verify-repo=none\n    - apt-get update && apt-get install -y librsvg2-bin\n  script:\n    - quarto render . --output-dir public\n  artifacts:\n    paths:\n      - public\n  only:\n    - main\n\n\n\n\n\n\nThe first step is to create a .gitlab-ci.yml file at the root of your repository:\n\nCreate a new file named .gitlab-ci.yml\nCopy the configuration example from the previous section\nAdjust paths, commands, and options as needed for your specific project\n\n\n\n\nFor the pipeline to work properly, set up these variables in GitLab:\n\nGo to your GitLab project\nNavigate to Settings &gt; CI/CD\nExpand the Variables section\nAdd the following variables:\n\nSSH_PRIVATE_KEY (protected, masked): SSH key for deployment\nSSH_KNOWN_HOSTS (protected): SSH known hosts content\nSTAGING_SERVER_USER: Username for staging server\nSTAGING_SERVER_HOST: Hostname/IP for staging server\nPRODUCTION_SERVER_USER: Username for production server\nPRODUCTION_SERVER_HOST: Hostname/IP for production server\n\n\n\n\n\nTo enable the test stage, ensure you have the proper test setup:\n\nInstall testing frameworks:\npip install pytest flake8\nCreate a tests directory in your project\nAdd test files following the pytest naming convention (test_*.py)\n\n\n\n\nCreate a .flake8 configuration file to customize the linting rules:\n[flake8]\nmax-line-length = 120\nexclude = .git,__pycache__,docs/,build/,dist/\nignore = E203, W503\n\n\n\nEnsure your Dockerfile is properly set up:\n\nReview your existing Dockerfile\nMake sure it includes all necessary dependencies\nConsider multi-stage builds for efficiency\n\n\n\n\nPrepare your staging and production servers:\n\nSet up SSH keys for authentication\nCreate the deployment directory structure\nInstall Docker and Docker Compose on the servers\nCreate a docker-compose.yml file for deployment\n\n\n\n\n\n\n\n\nNavigate to your GitLab project’s CI/CD &gt; Pipelines section\nCheck the status of your pipeline runs\nClick on a pipeline to see detailed information about each job\n\n\n\n\n\n\n\n\n\n\n\n\nIssue\nPossible Cause\nSolution\n\n\n\n\nTest failures\nCode quality issues or broken tests\nReview test output and fix identified issues\n\n\nBuild failures\nMissing dependencies or configuration issues\nCheck build logs and update Dockerfile accordingly\n\n\nDeployment failures\nSSH connection issues or server problems\nVerify SSH keys and server configuration\n\n\nPages build failures\nMissing dependencies or rendering issues\nCheck Quarto dependencies and fix document errors\n\n\n\n\n\n\n\nThis CI/CD pipeline provides our team with an automated workflow for testing, building, and deploying our Automatic Solar Panel Detection application. By following this approach, we ensure consistent quality, reduce manual errors, and speed up our delivery process.\nRemember that CI/CD is an evolving practice. We should regularly review and update our pipeline based on feedback and changing requirements."
+  },
+  {
+    "objectID": "docs/process_management/cicd_pipeline.html#what-is-cicd",
+    "href": "docs/process_management/cicd_pipeline.html#what-is-cicd",
+    "title": "CI/CD Pipeline",
+    "section": "",
+    "text": "Continuous Integration and Continuous Deployment (CI/CD) is a method to frequently deliver apps to customers by introducing automation into the stages of app development. The main concepts attributed to CI/CD are continuous integration, continuous delivery, and continuous deployment.\n\nContinuous Integration (CI): Developers merge their changes back to the main branch as often as possible. The developer’s changes are validated by creating a build and running automated tests against the build.\nContinuous Delivery (CD): An extension of continuous integration to make sure that new changes can be released to customers quickly in a sustainable way.\nContinuous Deployment: Every change that passes all stages of your production pipeline is released to your customers. There’s no human intervention, and only a failed test will prevent a new change to be deployed to production."
+  },
+  {
+    "objectID": "docs/process_management/cicd_pipeline.html#why-gitlab",
+    "href": "docs/process_management/cicd_pipeline.html#why-gitlab",
+    "title": "CI/CD Pipeline",
+    "section": "",
+    "text": "For our project, we chose GitLab CI/CD for the following reasons:\n\nIntegrated Solution: GitLab provides an all-in-one solution for source code management, CI/CD, and issue tracking, reducing the need for additional tools.\nDocker Integration: GitLab CI/CD has robust Docker integration, which works well with our containerized application architecture.\nPipeline as Code: With GitLab, we define our pipeline in a .gitlab-ci.yml file that lives with our code, providing versioning and change tracking for our deployment process.\nEnvironments: GitLab’s environment feature helps us manage deployments to different environments (staging, production) and track what version is deployed where.\nArtifacts: GitLab makes it easy to pass build artifacts between stages, which is useful for our ML model deployment process."
+  },
+  {
+    "objectID": "docs/process_management/cicd_pipeline.html#pipeline-components",
+    "href": "docs/process_management/cicd_pipeline.html#pipeline-components",
+    "title": "CI/CD Pipeline",
+    "section": "",
+    "text": "Our CI/CD pipeline consists of four main stages:\n\n\nThe test stage ensures code quality through:\n\nLinting: Checking code style and potential issues\nUnit Testing: Testing individual components\nIntegration Testing: Testing component interactions\n\n\n\n\nThe build stage creates deployable artifacts:\n\nDocker Image: Packaging our application\nPush to Registry: Making images available for deployment\n\n\n\n\nThe deploy stage manages deployment to different environments:\n\nStaging: Automatic deployment for testing\nProduction: Manual deployment for controlled releases\n\n\n\n\nThe pages stage publishes documentation:\n\nQuarto Rendering: Converting our Quarto documents to HTML\nPublication: Making documentation available via GitLab Pages"
+  },
+  {
+    "objectID": "docs/process_management/cicd_pipeline.html#code-quality-tools",
+    "href": "docs/process_management/cicd_pipeline.html#code-quality-tools",
+    "title": "CI/CD Pipeline",
+    "section": "",
+    "text": "We selected Flake8 for linting our Python code after comparing several alternatives:\n\n\n\n\n\n\n\n\n\nTool\nPros\nCons\nDecision Rationale\n\n\n\n\nFlake8\n- Combines PyFlakes, pycodestyle, and McCabe- Fast execution- Highly configurable- Well-established in Python community\n- Less comprehensive than some alternatives- Doesn’t auto-fix issues\nSELECTED- Good balance between speed and functionality- Easy integration with GitLab CI\n\n\nPylint\n- Very comprehensive checks- Detailed reports- Highly configurable\n- Slow execution- Sometimes too strict- Can produce false positives\nNot selected due to slower performance and potentially excessive strictness\n\n\nBlack\n- Auto-formats code- Minimal configuration needed- Consistent formatting\n- Not a linter (only formats)- Limited configuration options- Opinionated style\nConsidered as a complementary tool, but not as our primary quality check\n\n\nRuff\n- Very fast (Rust-based)- Compatible with Flake8 rules- Can auto-fix some issues\n- Relatively new- Less established ecosystem\nPromising but avoided due to its relative newness"
+  },
+  {
+    "objectID": "docs/process_management/cicd_pipeline.html#pipeline-configuration",
+    "href": "docs/process_management/cicd_pipeline.html#pipeline-configuration",
+    "title": "CI/CD Pipeline",
+    "section": "",
+    "text": "Our pipeline is defined in the .gitlab-ci.yml file at the root of our repository. It includes all the stages, jobs, and configurations needed for our CI/CD process.\nstages:\n  - test\n  - build\n  - deploy\n  - pages\n\nvariables:\n  DOCKER_DRIVER: overlay2\n  DOCKER_TLS_CERTDIR: \"\"\n  DOCKER_HOST: tcp://docker:2375\n  IMAGE_NAME: ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}\n\n# Test stage jobs\ntest:\n  stage: test\n  image: python:3.9\n  before_script:\n    - pip install -r requirements.txt\n    - pip install pytest flake8\n  script:\n    - flake8 src/ --max-line-length=120\n    - python -m pytest src/\n\n# Build stage jobs\nbuild:\n  stage: build\n  image: docker:20.10.16\n  services:\n    - docker:20.10.16-dind\n  before_script:\n    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY\n  script:\n    - docker build -t $IMAGE_NAME .\n    - docker push $IMAGE_NAME\n  only:\n    - main\n    - tags\n\n# Deploy stage jobs\ndeploy_staging:\n  stage: deploy\n  image: alpine:latest\n  before_script:\n    - apk add --no-cache openssh-client\n    - eval $(ssh-agent -s)\n    - echo \"$SSH_PRIVATE_KEY\" | tr -d '\\r' | ssh-add -\n    - mkdir -p ~/.ssh\n    - echo \"$SSH_KNOWN_HOSTS\" &gt; ~/.ssh/known_hosts\n    - chmod 644 ~/.ssh/known_hosts\n  script:\n    - ssh $STAGING_SERVER_USER@$STAGING_SERVER_HOST \"cd /path/to/deployment && docker-compose pull && docker-compose up -d\"\n  environment:\n    name: staging\n  only:\n    - main\n\ndeploy_production:\n  stage: deploy\n  image: alpine:latest\n  before_script:\n    - apk add --no-cache openssh-client\n    - eval $(ssh-agent -s)\n    - echo \"$SSH_PRIVATE_KEY\" | tr -d '\\r' | ssh-add -\n    - mkdir -p ~/.ssh\n    - echo \"$SSH_KNOWN_HOSTS\" &gt; ~/.ssh/known_hosts\n    - chmod 644 ~/.ssh/known_hosts\n  script:\n    - ssh $PRODUCTION_SERVER_USER@$PRODUCTION_SERVER_HOST \"cd /path/to/deployment && docker-compose pull && docker-compose up -d\"\n  environment:\n    name: production\n  only:\n    - tags\n  when: manual\n\n# Pages stage jobs\npages:\n  stage: pages\n  image: ghcr.io/quarto-dev/quarto-full:latest\n  before_script:\n    - tlmgr option repository http://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2024/tlnet-final\n    - tlmgr update --self --verify-repo=none\n    - tlmgr install beamer caption soul koma-script --verify-repo=none\n    - apt-get update && apt-get install -y librsvg2-bin\n  script:\n    - quarto render . --output-dir public\n  artifacts:\n    paths:\n      - public\n  only:\n    - main"
+  },
+  {
+    "objectID": "docs/process_management/cicd_pipeline.html#implementation-guide",
+    "href": "docs/process_management/cicd_pipeline.html#implementation-guide",
+    "title": "CI/CD Pipeline",
+    "section": "",
+    "text": "The first step is to create a .gitlab-ci.yml file at the root of your repository:\n\nCreate a new file named .gitlab-ci.yml\nCopy the configuration example from the previous section\nAdjust paths, commands, and options as needed for your specific project\n\n\n\n\nFor the pipeline to work properly, set up these variables in GitLab:\n\nGo to your GitLab project\nNavigate to Settings &gt; CI/CD\nExpand the Variables section\nAdd the following variables:\n\nSSH_PRIVATE_KEY (protected, masked): SSH key for deployment\nSSH_KNOWN_HOSTS (protected): SSH known hosts content\nSTAGING_SERVER_USER: Username for staging server\nSTAGING_SERVER_HOST: Hostname/IP for staging server\nPRODUCTION_SERVER_USER: Username for production server\nPRODUCTION_SERVER_HOST: Hostname/IP for production server\n\n\n\n\n\nTo enable the test stage, ensure you have the proper test setup:\n\nInstall testing frameworks:\npip install pytest flake8\nCreate a tests directory in your project\nAdd test files following the pytest naming convention (test_*.py)\n\n\n\n\nCreate a .flake8 configuration file to customize the linting rules:\n[flake8]\nmax-line-length = 120\nexclude = .git,__pycache__,docs/,build/,dist/\nignore = E203, W503\n\n\n\nEnsure your Dockerfile is properly set up:\n\nReview your existing Dockerfile\nMake sure it includes all necessary dependencies\nConsider multi-stage builds for efficiency\n\n\n\n\nPrepare your staging and production servers:\n\nSet up SSH keys for authentication\nCreate the deployment directory structure\nInstall Docker and Docker Compose on the servers\nCreate a docker-compose.yml file for deployment"
+  },
+  {
+    "objectID": "docs/process_management/cicd_pipeline.html#monitoring",
+    "href": "docs/process_management/cicd_pipeline.html#monitoring",
+    "title": "CI/CD Pipeline",
+    "section": "",
+    "text": "Navigate to your GitLab project’s CI/CD &gt; Pipelines section\nCheck the status of your pipeline runs\nClick on a pipeline to see detailed information about each job\n\n\n\n\n\n\n\n\n\n\n\n\nIssue\nPossible Cause\nSolution\n\n\n\n\nTest failures\nCode quality issues or broken tests\nReview test output and fix identified issues\n\n\nBuild failures\nMissing dependencies or configuration issues\nCheck build logs and update Dockerfile accordingly\n\n\nDeployment failures\nSSH connection issues or server problems\nVerify SSH keys and server configuration\n\n\nPages build failures\nMissing dependencies or rendering issues\nCheck Quarto dependencies and fix document errors"
+  },
+  {
+    "objectID": "docs/process_management/cicd_pipeline.html#conclusion",
+    "href": "docs/process_management/cicd_pipeline.html#conclusion",
+    "title": "CI/CD Pipeline",
+    "section": "",
+    "text": "This CI/CD pipeline provides our team with an automated workflow for testing, building, and deploying our Automatic Solar Panel Detection application. By following this approach, we ensure consistent quality, reduce manual errors, and speed up our delivery process.\nRemember that CI/CD is an evolving practice. We should regularly review and update our pipeline based on feedback and changing requirements."
+  },
+  {
+    "objectID": "AWS_DEPLOYMENT.html",
+    "href": "AWS_DEPLOYMENT.html",
+    "title": "AWS Deployment Environment Configuration",
+    "section": "",
+    "text": "When deploying the solar panel detection system to AWS, ensure the following environment variables are properly configured:\n\n\n# Airflow security keys\nAIRFLOW__CORE__FERNET_KEY=k8IfvPBpKOoDZSBbqHOQCya9gshVXcZ5-apiPfVHfB8=\nAIRFLOW__WEBSERVER__SECRET_KEY=a-very-secret-key-that-should-be-changed-in-production\n\n\n\n**AIRFLOW__WEBSERVER__SECRET_KEY: This is used for signing session cookies and CSRF tokens. It MUST** be the same across all Airflow components (webserver, scheduler, worker, triggerer) to prevent 403 FORBIDDEN errors when accessing logs. Generate a strong random key for production.\n**AIRFLOW__CORE__FERNET_KEY**: Used to encrypt passwords in the connection and variable configurations. Generate a secure key using:\npython -c \"from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())\"\n\n# Airflow database connection\nAIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://postgres:postgres@postgres/postgres\n\n\n\n\nWhen deploying microservices to AWS, service-to-service communication should follow these best practices:\n\n\nService URLs should be configured via environment variables instead of hardcoded values:\n# For FastAPI Gateway\nDETECTION_SERVICE_URL=http://solarpanel-detection-service:8000  # In ECS/K8s\n# or\nDETECTION_SERVICE_URL=http://internal-alb-name.region.elb.amazonaws.com  # Using ALB\n\n\n\nDepending on your deployment model, use these patterns:\n\nECS with Service Discovery: Use service discovery namespaces with DNS\nDETECTION_SERVICE_URL=http://detection-service.internal:8000\nECS with Application Load Balancer:\nDETECTION_SERVICE_URL=http://internal-detection-alb-12345.us-east-1.elb.amazonaws.com\nKubernetes: Use Kubernetes service names\nDETECTION_SERVICE_URL=http://solarpanel-detection-svc.default.svc.cluster.local:8000\nAPI Gateway and Lambda: Use API Gateway URLs\nDETECTION_SERVICE_URL=https://api-id.execute-api.region.amazonaws.com/stage\n\nUsing environment variables for service URLs allows your application to be: - Environment agnostic (works locally, in staging, and production) - Cloud provider agnostic - Easier to scale and reconfigure without code changes\n\n\n\n\nThe system supports both local MinIO and AWS S3. When deploying to AWS, you can use either:\n\n\n# Self-hosted MinIO configuration\nMINIO_ENDPOINT=your-minio-server  # Without http:// prefix\nMINIO_PORT=9000\nMINIO_ACCESS_KEY=your_minio_access\nMINIO_SECRET_KEY=your_minio_secret\nMINIO_SECURE=False  # Set to True if using HTTPS\nMINIO_BUCKET=your-bucket-name\nThe application code prioritizes AWS credentials when both are present. For local development with MinIO, you can leave AWS credential variables empty.\n\n\n\n\nIf you’re seeing permissions issues with logs (403 errors), ensure that:\n\nAll Airflow components (webserver, scheduler, worker, triggerer) use the EXACT SAME AIRFLOW__WEBSERVER__SECRET_KEY\nContainer time is synchronized across all machines (consider adding an NTP service)\nLog storage is properly configured and accessible to all containers\n\n\n\n\nIf you’re experiencing MinIO/S3 connection issues, check:\n\nNetwork connectivity between Airflow and S3/MinIO service\nVPC Security Group rules (if applicable)\nIAM permissions for the AWS credentials (need s3:GetObject, s3:PutObject, s3:ListBucket)\nBucket existence and proper permissions\n\n\n\ndocker run --rm -it \\\n  -e MINIO_ACCESS_KEY=minioadmin \\\n  -e MINIO_SECRET_KEY=minioadmin \\\n  python:3.10-slim \\\n  /bin/bash -c \"pip install minio && python -c 'from minio import Minio; client=Minio(\\\"minio:9000\\\", access_key=\\\"$MINIO_ACCESS_KEY\\\", secret_key=\\\"$MINIO_SECRET_KEY\\\", secure=False); print(client.list_buckets())'\"\n\n\n\n\nIf containers can’t resolve each other by name (like the “759b6305fa8c” error in your logs), try these solutions:\n\nUse fixed container names in the docker-compose file and reference those names in connection strings\nSet up a proper DNS service if running in Kubernetes or complex environments\nUse container IP addresses if necessary (though names are preferred)\n\n\n\n\nTo debug Airflow logs access issues, check if you can access the logs directly:\n# Get container ID\ndocker ps | grep airflow-worker\n# Check webserver config\ndocker exec -it airflow-webserver cat /opt/airflow/airflow.cfg | grep secret_key\n# Check worker config \ndocker exec -it airflow-worker cat /opt/airflow/airflow.cfg | grep secret_key\nThe secret_key values should match exactly across all containers."
+  },
+  {
+    "objectID": "AWS_DEPLOYMENT.html#essential-airflow-configuration",
+    "href": "AWS_DEPLOYMENT.html#essential-airflow-configuration",
+    "title": "AWS Deployment Environment Configuration",
+    "section": "",
+    "text": "# Airflow security keys\nAIRFLOW__CORE__FERNET_KEY=k8IfvPBpKOoDZSBbqHOQCya9gshVXcZ5-apiPfVHfB8=\nAIRFLOW__WEBSERVER__SECRET_KEY=a-very-secret-key-that-should-be-changed-in-production\n\n\n\n**AIRFLOW__WEBSERVER__SECRET_KEY: This is used for signing session cookies and CSRF tokens. It MUST** be the same across all Airflow components (webserver, scheduler, worker, triggerer) to prevent 403 FORBIDDEN errors when accessing logs. Generate a strong random key for production.\n**AIRFLOW__CORE__FERNET_KEY**: Used to encrypt passwords in the connection and variable configurations. Generate a secure key using:\npython -c \"from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())\"\n\n# Airflow database connection\nAIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://postgres:postgres@postgres/postgres"
+  },
+  {
+    "objectID": "AWS_DEPLOYMENT.html#service-communication-in-cloud-environments",
+    "href": "AWS_DEPLOYMENT.html#service-communication-in-cloud-environments",
+    "title": "AWS Deployment Environment Configuration",
+    "section": "",
+    "text": "When deploying microservices to AWS, service-to-service communication should follow these best practices:\n\n\nService URLs should be configured via environment variables instead of hardcoded values:\n# For FastAPI Gateway\nDETECTION_SERVICE_URL=http://solarpanel-detection-service:8000  # In ECS/K8s\n# or\nDETECTION_SERVICE_URL=http://internal-alb-name.region.elb.amazonaws.com  # Using ALB\n\n\n\nDepending on your deployment model, use these patterns:\n\nECS with Service Discovery: Use service discovery namespaces with DNS\nDETECTION_SERVICE_URL=http://detection-service.internal:8000\nECS with Application Load Balancer:\nDETECTION_SERVICE_URL=http://internal-detection-alb-12345.us-east-1.elb.amazonaws.com\nKubernetes: Use Kubernetes service names\nDETECTION_SERVICE_URL=http://solarpanel-detection-svc.default.svc.cluster.local:8000\nAPI Gateway and Lambda: Use API Gateway URLs\nDETECTION_SERVICE_URL=https://api-id.execute-api.region.amazonaws.com/stage\n\nUsing environment variables for service URLs allows your application to be: - Environment agnostic (works locally, in staging, and production) - Cloud provider agnostic - Easier to scale and reconfigure without code changes"
+  },
+  {
+    "objectID": "AWS_DEPLOYMENT.html#minios3-configuration-for-aws",
+    "href": "AWS_DEPLOYMENT.html#minios3-configuration-for-aws",
+    "title": "AWS Deployment Environment Configuration",
+    "section": "",
+    "text": "The system supports both local MinIO and AWS S3. When deploying to AWS, you can use either:\n\n\n# Self-hosted MinIO configuration\nMINIO_ENDPOINT=your-minio-server  # Without http:// prefix\nMINIO_PORT=9000\nMINIO_ACCESS_KEY=your_minio_access\nMINIO_SECRET_KEY=your_minio_secret\nMINIO_SECURE=False  # Set to True if using HTTPS\nMINIO_BUCKET=your-bucket-name\nThe application code prioritizes AWS credentials when both are present. For local development with MinIO, you can leave AWS credential variables empty."
+  },
+  {
+    "objectID": "AWS_DEPLOYMENT.html#logging-configuration",
+    "href": "AWS_DEPLOYMENT.html#logging-configuration",
+    "title": "AWS Deployment Environment Configuration",
+    "section": "",
+    "text": "If you’re seeing permissions issues with logs (403 errors), ensure that:\n\nAll Airflow components (webserver, scheduler, worker, triggerer) use the EXACT SAME AIRFLOW__WEBSERVER__SECRET_KEY\nContainer time is synchronized across all machines (consider adding an NTP service)\nLog storage is properly configured and accessible to all containers"
+  },
+  {
+    "objectID": "AWS_DEPLOYMENT.html#troubleshooting-connection-issues",
+    "href": "AWS_DEPLOYMENT.html#troubleshooting-connection-issues",
+    "title": "AWS Deployment Environment Configuration",
+    "section": "",
+    "text": "If you’re experiencing MinIO/S3 connection issues, check:\n\nNetwork connectivity between Airflow and S3/MinIO service\nVPC Security Group rules (if applicable)\nIAM permissions for the AWS credentials (need s3:GetObject, s3:PutObject, s3:ListBucket)\nBucket existence and proper permissions\n\n\n\ndocker run --rm -it \\\n  -e MINIO_ACCESS_KEY=minioadmin \\\n  -e MINIO_SECRET_KEY=minioadmin \\\n  python:3.10-slim \\\n  /bin/bash -c \"pip install minio && python -c 'from minio import Minio; client=Minio(\\\"minio:9000\\\", access_key=\\\"$MINIO_ACCESS_KEY\\\", secret_key=\\\"$MINIO_SECRET_KEY\\\", secure=False); print(client.list_buckets())'\""
+  },
+  {
+    "objectID": "AWS_DEPLOYMENT.html#container-dns-resolution",
+    "href": "AWS_DEPLOYMENT.html#container-dns-resolution",
+    "title": "AWS Deployment Environment Configuration",
+    "section": "",
+    "text": "If containers can’t resolve each other by name (like the “759b6305fa8c” error in your logs), try these solutions:\n\nUse fixed container names in the docker-compose file and reference those names in connection strings\nSet up a proper DNS service if running in Kubernetes or complex environments\nUse container IP addresses if necessary (though names are preferred)"
+  },
+  {
+    "objectID": "AWS_DEPLOYMENT.html#checking-logs",
+    "href": "AWS_DEPLOYMENT.html#checking-logs",
+    "title": "AWS Deployment Environment Configuration",
+    "section": "",
+    "text": "To debug Airflow logs access issues, check if you can access the logs directly:\n# Get container ID\ndocker ps | grep airflow-worker\n# Check webserver config\ndocker exec -it airflow-webserver cat /opt/airflow/airflow.cfg | grep secret_key\n# Check worker config \ndocker exec -it airflow-worker cat /opt/airflow/airflow.cfg | grep secret_key\nThe secret_key values should match exactly across all containers."
+  },
+  {
+    "objectID": "docs/process_management/cicd_implementation_steps.html",
+    "href": "docs/process_management/cicd_implementation_steps.html",
+    "title": "CI/CD Implementation Guide",
+    "section": "",
+    "text": "This guide provides detailed, step-by-step instructions for implementing the CI/CD pipeline we’ve configured for the Automatic Solar Panel Detection project.\n\n\nBefore proceeding with the implementation, ensure you have:\n\nA GitLab account with appropriate permissions\nBasic understanding of Git and GitLab\nAccess to deployment servers (for staging and production)\nDocker and Docker Compose installed on your local machine\n\n\n\n\nFirst, clone the repository to your local machine:\ngit clone &lt;repository-url&gt;\ncd AutomaticSolarPanelDetection\n\n\n\nWe’ve already created the necessary files for CI/CD:\n\n.gitlab-ci.yml - Main CI/CD configuration file\n.flake8 - Configuration for code quality checks\nsrc/tests/ - Directory containing test files\n\n\n\n\nFor the pipeline to work correctly, you need to set up environment variables in GitLab:\n\nGo to your GitLab project\nNavigate to Settings &gt; CI/CD\nExpand the Variables section\nAdd the following variables:\n\n\n\n\n\n\n\n\n\n\nVariable\nDescription\nType\nProtection\n\n\n\n\nSSH_PRIVATE_KEY\nSSH key for deployment\nFile\nProtected, Masked\n\n\nSSH_KNOWN_HOSTS\nSSH known hosts content\nVariable\nProtected\n\n\nSTAGING_SERVER_USER\nUsername for staging server\nVariable\nProtected\n\n\nSTAGING_SERVER_HOST\nHostname/IP for staging server\nVariable\nProtected\n\n\nPRODUCTION_SERVER_USER\nUsername for production server\nVariable\nProtected\n\n\nPRODUCTION_SERVER_HOST\nHostname/IP for production server\nVariable\nProtected\n\n\n\n\n\n\nGitLab CI/CD Variables\n\n\n\n\n\nTo securely deploy to your servers, you need to set up SSH keys:\n\nGenerate an SSH key pair (if you don’t already have one):\nssh-keygen -t ed25519 -C \"gitlab-ci-deployment\"\nAdd the public key to the ~/.ssh/authorized_keys file on your staging and production servers\nSet the private key as the SSH_PRIVATE_KEY variable in GitLab\nGenerate the SSH_KNOWN_HOSTS content:\nssh-keyscan -t rsa &lt;staging-server-ip&gt; &lt;production-server-ip&gt;\n\n\n\n\nOn both staging and production servers:\n\nCreate the deployment directory:\nsudo mkdir -p /opt/solar-panel-detection\nsudo chown &lt;user&gt;:&lt;group&gt; /opt/solar-panel-detection\nInstall Docker and Docker Compose:\n# Install Docker\ncurl -fsSL https://get.docker.com -o get-docker.sh\nsudo sh get-docker.sh\n\n# Install Docker Compose\nsudo curl -L \"https://github.com/docker/compose/releases/download/v2.18.1/docker-compose-$(uname -s)-$(uname -m)\" -o /usr/local/bin/docker-compose\nsudo chmod +x /usr/local/bin/docker-compose\nCreate a docker-compose.yml file in the deployment directory:\n# Create the deployment file on the server\nnano /opt/solar-panel-detection/docker-compose.yml\nExample docker-compose.yml (adjust as needed):\nversion: '3'\nservices:\n  app:\n    image: ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}\n    restart: always\n    ports:\n      - \"8080:8080\"\n    environment:\n      - ENVIRONMENT=production\n\n\n\n\nBefore pushing to GitLab, you can test parts of the pipeline locally:\n\nLint your code:\npip install flake8\nflake8 src/ --max-line-length=120\nRun tests:\npip install pytest\npython -m pytest src/ -v\nBuild Docker image:\ndocker build -t solar-panel-detection:local .\n\n\n\n\nCommit all changes and push to GitLab to trigger the pipeline:\ngit add .\ngit commit -m \"Configure CI/CD pipeline\"\ngit push origin main\n\n\n\n\nGo to your GitLab project\nNavigate to CI/CD &gt; Pipelines\nMonitor the progress of your pipeline\n\n\n\n\nGitLab CI/CD Pipeline\n\n\n\n\n\nIf your pipeline fails, check these common issues:\n\nMissing variables: Ensure all required CI/CD variables are set\nSSH issues: Test SSH connections from your local machine\nDocker issues: Check Docker installation on servers\nTest failures: Fix code issues identified by tests\n\n\n\n\nYou can schedule periodic pipeline runs:\n\nGo to CI/CD &gt; Schedules\nClick “New schedule”\nConfigure schedule settings (e.g., run weekly)\n\n\n\n\nYou have now successfully implemented the GitLab CI/CD pipeline for the Automatic Solar Panel Detection project. This pipeline automates testing, building, and deployment processes, ensuring code quality and efficient delivery.\nRemember to regularly review and update your CI/CD configuration as the project evolves."
+  },
+  {
+    "objectID": "docs/process_management/cicd_implementation_steps.html#prerequisites",
+    "href": "docs/process_management/cicd_implementation_steps.html#prerequisites",
+    "title": "CI/CD Implementation Guide",
+    "section": "",
+    "text": "Before proceeding with the implementation, ensure you have:\n\nA GitLab account with appropriate permissions\nBasic understanding of Git and GitLab\nAccess to deployment servers (for staging and production)\nDocker and Docker Compose installed on your local machine"
+  },
+  {
+    "objectID": "docs/process_management/cicd_implementation_steps.html#step-1-clone-the-repository",
+    "href": "docs/process_management/cicd_implementation_steps.html#step-1-clone-the-repository",
+    "title": "CI/CD Implementation Guide",
+    "section": "",
+    "text": "First, clone the repository to your local machine:\ngit clone &lt;repository-url&gt;\ncd AutomaticSolarPanelDetection"
+  },
+  {
+    "objectID": "docs/process_management/cicd_implementation_steps.html#step-2-configure-gitlab-cicd-files",
+    "href": "docs/process_management/cicd_implementation_steps.html#step-2-configure-gitlab-cicd-files",
+    "title": "CI/CD Implementation Guide",
+    "section": "",
+    "text": "We’ve already created the necessary files for CI/CD:\n\n.gitlab-ci.yml - Main CI/CD configuration file\n.flake8 - Configuration for code quality checks\nsrc/tests/ - Directory containing test files"
+  },
+  {
+    "objectID": "docs/process_management/cicd_implementation_steps.html#step-3-configure-gitlab-cicd-variables",
+    "href": "docs/process_management/cicd_implementation_steps.html#step-3-configure-gitlab-cicd-variables",
+    "title": "CI/CD Implementation Guide",
+    "section": "",
+    "text": "For the pipeline to work correctly, you need to set up environment variables in GitLab:\n\nGo to your GitLab project\nNavigate to Settings &gt; CI/CD\nExpand the Variables section\nAdd the following variables:\n\n\n\n\n\n\n\n\n\n\nVariable\nDescription\nType\nProtection\n\n\n\n\nSSH_PRIVATE_KEY\nSSH key for deployment\nFile\nProtected, Masked\n\n\nSSH_KNOWN_HOSTS\nSSH known hosts content\nVariable\nProtected\n\n\nSTAGING_SERVER_USER\nUsername for staging server\nVariable\nProtected\n\n\nSTAGING_SERVER_HOST\nHostname/IP for staging server\nVariable\nProtected\n\n\nPRODUCTION_SERVER_USER\nUsername for production server\nVariable\nProtected\n\n\nPRODUCTION_SERVER_HOST\nHostname/IP for production server\nVariable\nProtected\n\n\n\n\n\n\nGitLab CI/CD Variables"
+  },
+  {
+    "objectID": "docs/process_management/cicd_implementation_steps.html#step-4-generate-ssh-keys-for-deployment",
+    "href": "docs/process_management/cicd_implementation_steps.html#step-4-generate-ssh-keys-for-deployment",
+    "title": "CI/CD Implementation Guide",
+    "section": "",
+    "text": "To securely deploy to your servers, you need to set up SSH keys:\n\nGenerate an SSH key pair (if you don’t already have one):\nssh-keygen -t ed25519 -C \"gitlab-ci-deployment\"\nAdd the public key to the ~/.ssh/authorized_keys file on your staging and production servers\nSet the private key as the SSH_PRIVATE_KEY variable in GitLab\nGenerate the SSH_KNOWN_HOSTS content:\nssh-keyscan -t rsa &lt;staging-server-ip&gt; &lt;production-server-ip&gt;"
+  },
+  {
+    "objectID": "docs/process_management/cicd_implementation_steps.html#step-5-prepare-deployment-servers",
+    "href": "docs/process_management/cicd_implementation_steps.html#step-5-prepare-deployment-servers",
+    "title": "CI/CD Implementation Guide",
+    "section": "",
+    "text": "On both staging and production servers:\n\nCreate the deployment directory:\nsudo mkdir -p /opt/solar-panel-detection\nsudo chown &lt;user&gt;:&lt;group&gt; /opt/solar-panel-detection\nInstall Docker and Docker Compose:\n# Install Docker\ncurl -fsSL https://get.docker.com -o get-docker.sh\nsudo sh get-docker.sh\n\n# Install Docker Compose\nsudo curl -L \"https://github.com/docker/compose/releases/download/v2.18.1/docker-compose-$(uname -s)-$(uname -m)\" -o /usr/local/bin/docker-compose\nsudo chmod +x /usr/local/bin/docker-compose\nCreate a docker-compose.yml file in the deployment directory:\n# Create the deployment file on the server\nnano /opt/solar-panel-detection/docker-compose.yml\nExample docker-compose.yml (adjust as needed):\nversion: '3'\nservices:\n  app:\n    image: ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}\n    restart: always\n    ports:\n      - \"8080:8080\"\n    environment:\n      - ENVIRONMENT=production"
+  },
+  {
+    "objectID": "docs/process_management/cicd_implementation_steps.html#step-6-test-the-pipeline-locally",
+    "href": "docs/process_management/cicd_implementation_steps.html#step-6-test-the-pipeline-locally",
+    "title": "CI/CD Implementation Guide",
+    "section": "",
+    "text": "Before pushing to GitLab, you can test parts of the pipeline locally:\n\nLint your code:\npip install flake8\nflake8 src/ --max-line-length=120\nRun tests:\npip install pytest\npython -m pytest src/ -v\nBuild Docker image:\ndocker build -t solar-panel-detection:local ."
+  },
+  {
+    "objectID": "docs/process_management/cicd_implementation_steps.html#step-7-push-to-gitlab",
+    "href": "docs/process_management/cicd_implementation_steps.html#step-7-push-to-gitlab",
+    "title": "CI/CD Implementation Guide",
+    "section": "",
+    "text": "Commit all changes and push to GitLab to trigger the pipeline:\ngit add .\ngit commit -m \"Configure CI/CD pipeline\"\ngit push origin main"
+  },
+  {
+    "objectID": "docs/process_management/cicd_implementation_steps.html#step-8-monitor-the-pipeline",
+    "href": "docs/process_management/cicd_implementation_steps.html#step-8-monitor-the-pipeline",
+    "title": "CI/CD Implementation Guide",
+    "section": "",
+    "text": "Go to your GitLab project\nNavigate to CI/CD &gt; Pipelines\nMonitor the progress of your pipeline\n\n\n\n\nGitLab CI/CD Pipeline"
+  },
+  {
+    "objectID": "docs/process_management/cicd_implementation_steps.html#step-9-debug-common-issues",
+    "href": "docs/process_management/cicd_implementation_steps.html#step-9-debug-common-issues",
+    "title": "CI/CD Implementation Guide",
+    "section": "",
+    "text": "If your pipeline fails, check these common issues:\n\nMissing variables: Ensure all required CI/CD variables are set\nSSH issues: Test SSH connections from your local machine\nDocker issues: Check Docker installation on servers\nTest failures: Fix code issues identified by tests"
+  },
+  {
+    "objectID": "docs/process_management/cicd_implementation_steps.html#step-10-configure-pipeline-schedule-optional",
+    "href": "docs/process_management/cicd_implementation_steps.html#step-10-configure-pipeline-schedule-optional",
+    "title": "CI/CD Implementation Guide",
+    "section": "",
+    "text": "You can schedule periodic pipeline runs:\n\nGo to CI/CD &gt; Schedules\nClick “New schedule”\nConfigure schedule settings (e.g., run weekly)"
+  },
+  {
+    "objectID": "docs/process_management/cicd_implementation_steps.html#conclusion",
+    "href": "docs/process_management/cicd_implementation_steps.html#conclusion",
+    "title": "CI/CD Implementation Guide",
+    "section": "",
+    "text": "You have now successfully implemented the GitLab CI/CD pipeline for the Automatic Solar Panel Detection project. This pipeline automates testing, building, and deployment processes, ensuring code quality and efficient delivery.\nRemember to regularly review and update your CI/CD configuration as the project evolves."
+  },
+  {
+    "objectID": "docs/process_management/cicd_platforms_comparison.html",
+    "href": "docs/process_management/cicd_platforms_comparison.html",
+    "title": "CI/CD Platforms Comparison",
+    "section": "",
+    "text": "When implementing continuous integration and continuous deployment (CI/CD) for our project, we evaluated several platforms to determine the most suitable option. This document compares the key platforms and explains why we chose GitLab CI/CD.\n\n\nWe considered the following popular CI/CD platforms:\n\nGitLab CI/CD\nGitHub Actions\nJenkins\nCircleCI\nTravis CI\n\n\n\n\nThe table below compares the key features of each platform:\n\n\n\n\n\n\n\n\n\n\n\nFeature\nGitLab CI/CD\nGitHub Actions\nJenkins\nCircleCI\nTravis CI\n\n\n\n\nIntegrated SCM\nYes (GitLab)\nYes (GitHub)\nNo\nNo\nNo\n\n\nSelf-hosted option\nYes\nYes\nYes\nLimited\nNo\n\n\nContainer support\nExcellent\nGood\nGood\nExcellent\nGood\n\n\nPipeline as code\nYes (.gitlab-ci.yml)\nYes (workflow yaml)\nYes (Jenkinsfile)\nYes (config.yml)\nYes (.travis.yml)\n\n\nParallel execution\nYes\nYes\nYes\nYes\nYes\n\n\nMarketplace/Plugins\nYes\nYes\nExtensive\nYes\nLimited\n\n\nFree tier for private repos\n400 mins/mo\n2000 mins/mo\nSelf-hosted only\n6000 mins/mo\nLimited\n\n\nUI/UX\nGood\nExcellent\nBasic\nGood\nGood\n\n\nLearning curve\nMedium\nLow\nHigh\nMedium\nLow\n\n\nBuild time\nFast\nFast\nDepends on setup\nFast\nMedium\n\n\nCommunity support\nStrong\nVery strong\nVery strong\nGood\nGood\n\n\n\n\n\n\n\n\nPros: - All-in-one solution with SCM, CI/CD, issue tracking, and more - Robust container registry integration - Built-in deployment environments with tracking - Clear visualization of the CI/CD pipeline - Strong integration with GitLab repositories - Good documentation\nCons: - Limited free tier minutes compared to some alternatives - Some advanced features require higher tier plans - UI can be complex for beginners\n\n\n\nPros: - Excellent integration with GitHub repositories - Clean, intuitive UI - Large marketplace with pre-built actions - Easy to configure for simple workflows - Good free tier for public repositories\nCons: - Relatively new compared to other solutions - Some complex configurations can be challenging - Limited deployment options without third-party integrations\n\n\n\nPros: - Highly customizable with extensive plugin ecosystem - Complete control over the environment - Strong community support - No usage limits (self-hosted) - Mature platform with extensive features\nCons: - Requires significant setup and maintenance - Steep learning curve - Outdated UI - Requires dedicated server resources\n\n\n\nPros: - User-friendly interface - Fast build times - Good caching mechanisms - Excellent Docker support - Generous free tier\nCons: - Limited self-hosting options - Not as deeply integrated with SCM as GitLab or GitHub - Can become expensive for large teams\n\n\n\nPros: - Simple configuration - Good for open-source projects - Fast setup - Intuitive UI\nCons: - Limited free tier for private repositories - Fewer advanced features - No self-hosting option - Limited deployment options\n\n\n\n\nWhen selecting a CI/CD platform for our project, we considered the following factors:\n\nIntegration with existing tools: We needed seamless integration with our source code management system.\nContainer support: Strong Docker integration was crucial for our containerized application.\nDeployment automation: We needed flexible deployment options for different environments.\nPipeline visualization: Clear visualization of the pipeline stages and job status.\nLearning curve: The platform should be accessible to all team members.\nCost-effectiveness: The solution should provide good value while meeting our requirements.\n\n\n\n\nAfter evaluating the options, we selected GitLab CI/CD for the following reasons:\n\nAll-in-one platform: We were already using GitLab for source code management, making the integrated CI/CD solution a natural choice.\nContainer registry integration: GitLab’s integrated container registry works seamlessly with our Docker-based deployment strategy.\nPipeline as code: The .gitlab-ci.yml file allows us to version our CI/CD pipeline alongside our application code.\nEnvironment management: GitLab’s environment feature helps us track deployments across staging and production.\nArtifact handling: GitLab’s artifact mechanism works well for our ML model artifacts.\nAuto DevOps: GitLab’s Auto DevOps provides sensible defaults that we can build upon.\nSecurity scanning: Integrated security scanning helps us identify vulnerabilities early.\n\n\n\n\nWhen implementing GitLab CI/CD, we recommend:\n\nStart simple: Begin with basic stages and gradually add complexity.\nUse CI/CD variables: Store sensitive information as protected and masked variables.\nLeverage caching: Use caching to speed up subsequent pipeline runs.\nReview pipeline efficiency: Monitor job duration and optimize long-running jobs.\nConsider runners: For high-volume projects, set up dedicated runners.\n\n\n\n\nWhile all the evaluated platforms have their strengths, GitLab CI/CD provided the best fit for our project requirements, particularly due to its integration with our existing GitLab repositories and its robust container support.\nFor projects with different requirements, other platforms might be more suitable. For example:\n\nFor GitHub users, GitHub Actions provides the tightest integration.\nFor teams requiring maximum customization, Jenkins offers unparalleled flexibility.\nFor those valuing simplicity, CircleCI or Travis CI might be better options.\n\nThe choice of CI/CD platform should always align with your specific project needs, team expertise, and existing toolchain."
+  },
+  {
+    "objectID": "docs/process_management/cicd_platforms_comparison.html#evaluated-cicd-platforms",
+    "href": "docs/process_management/cicd_platforms_comparison.html#evaluated-cicd-platforms",
+    "title": "CI/CD Platforms Comparison",
+    "section": "",
+    "text": "We considered the following popular CI/CD platforms:\n\nGitLab CI/CD\nGitHub Actions\nJenkins\nCircleCI\nTravis CI"
+  },
+  {
+    "objectID": "docs/process_management/cicd_platforms_comparison.html#feature-comparison",
+    "href": "docs/process_management/cicd_platforms_comparison.html#feature-comparison",
+    "title": "CI/CD Platforms Comparison",
+    "section": "",
+    "text": "The table below compares the key features of each platform:\n\n\n\n\n\n\n\n\n\n\n\nFeature\nGitLab CI/CD\nGitHub Actions\nJenkins\nCircleCI\nTravis CI\n\n\n\n\nIntegrated SCM\nYes (GitLab)\nYes (GitHub)\nNo\nNo\nNo\n\n\nSelf-hosted option\nYes\nYes\nYes\nLimited\nNo\n\n\nContainer support\nExcellent\nGood\nGood\nExcellent\nGood\n\n\nPipeline as code\nYes (.gitlab-ci.yml)\nYes (workflow yaml)\nYes (Jenkinsfile)\nYes (config.yml)\nYes (.travis.yml)\n\n\nParallel execution\nYes\nYes\nYes\nYes\nYes\n\n\nMarketplace/Plugins\nYes\nYes\nExtensive\nYes\nLimited\n\n\nFree tier for private repos\n400 mins/mo\n2000 mins/mo\nSelf-hosted only\n6000 mins/mo\nLimited\n\n\nUI/UX\nGood\nExcellent\nBasic\nGood\nGood\n\n\nLearning curve\nMedium\nLow\nHigh\nMedium\nLow\n\n\nBuild time\nFast\nFast\nDepends on setup\nFast\nMedium\n\n\nCommunity support\nStrong\nVery strong\nVery strong\nGood\nGood"
+  },
+  {
+    "objectID": "docs/process_management/cicd_platforms_comparison.html#detailed-platform-analysis",
+    "href": "docs/process_management/cicd_platforms_comparison.html#detailed-platform-analysis",
+    "title": "CI/CD Platforms Comparison",
+    "section": "",
+    "text": "Pros: - All-in-one solution with SCM, CI/CD, issue tracking, and more - Robust container registry integration - Built-in deployment environments with tracking - Clear visualization of the CI/CD pipeline - Strong integration with GitLab repositories - Good documentation\nCons: - Limited free tier minutes compared to some alternatives - Some advanced features require higher tier plans - UI can be complex for beginners\n\n\n\nPros: - Excellent integration with GitHub repositories - Clean, intuitive UI - Large marketplace with pre-built actions - Easy to configure for simple workflows - Good free tier for public repositories\nCons: - Relatively new compared to other solutions - Some complex configurations can be challenging - Limited deployment options without third-party integrations\n\n\n\nPros: - Highly customizable with extensive plugin ecosystem - Complete control over the environment - Strong community support - No usage limits (self-hosted) - Mature platform with extensive features\nCons: - Requires significant setup and maintenance - Steep learning curve - Outdated UI - Requires dedicated server resources\n\n\n\nPros: - User-friendly interface - Fast build times - Good caching mechanisms - Excellent Docker support - Generous free tier\nCons: - Limited self-hosting options - Not as deeply integrated with SCM as GitLab or GitHub - Can become expensive for large teams\n\n\n\nPros: - Simple configuration - Good for open-source projects - Fast setup - Intuitive UI\nCons: - Limited free tier for private repositories - Fewer advanced features - No self-hosting option - Limited deployment options"
+  },
+  {
+    "objectID": "docs/process_management/cicd_platforms_comparison.html#decision-factors-for-our-project",
+    "href": "docs/process_management/cicd_platforms_comparison.html#decision-factors-for-our-project",
+    "title": "CI/CD Platforms Comparison",
+    "section": "",
+    "text": "When selecting a CI/CD platform for our project, we considered the following factors:\n\nIntegration with existing tools: We needed seamless integration with our source code management system.\nContainer support: Strong Docker integration was crucial for our containerized application.\nDeployment automation: We needed flexible deployment options for different environments.\nPipeline visualization: Clear visualization of the pipeline stages and job status.\nLearning curve: The platform should be accessible to all team members.\nCost-effectiveness: The solution should provide good value while meeting our requirements."
+  },
+  {
+    "objectID": "docs/process_management/cicd_platforms_comparison.html#why-we-chose-gitlab-cicd",
+    "href": "docs/process_management/cicd_platforms_comparison.html#why-we-chose-gitlab-cicd",
+    "title": "CI/CD Platforms Comparison",
+    "section": "",
+    "text": "After evaluating the options, we selected GitLab CI/CD for the following reasons:\n\nAll-in-one platform: We were already using GitLab for source code management, making the integrated CI/CD solution a natural choice.\nContainer registry integration: GitLab’s integrated container registry works seamlessly with our Docker-based deployment strategy.\nPipeline as code: The .gitlab-ci.yml file allows us to version our CI/CD pipeline alongside our application code.\nEnvironment management: GitLab’s environment feature helps us track deployments across staging and production.\nArtifact handling: GitLab’s artifact mechanism works well for our ML model artifacts.\nAuto DevOps: GitLab’s Auto DevOps provides sensible defaults that we can build upon.\nSecurity scanning: Integrated security scanning helps us identify vulnerabilities early."
+  },
+  {
+    "objectID": "docs/process_management/cicd_platforms_comparison.html#implementation-considerations",
+    "href": "docs/process_management/cicd_platforms_comparison.html#implementation-considerations",
+    "title": "CI/CD Platforms Comparison",
+    "section": "",
+    "text": "When implementing GitLab CI/CD, we recommend:\n\nStart simple: Begin with basic stages and gradually add complexity.\nUse CI/CD variables: Store sensitive information as protected and masked variables.\nLeverage caching: Use caching to speed up subsequent pipeline runs.\nReview pipeline efficiency: Monitor job duration and optimize long-running jobs.\nConsider runners: For high-volume projects, set up dedicated runners."
+  },
+  {
+    "objectID": "docs/process_management/cicd_platforms_comparison.html#conclusion",
+    "href": "docs/process_management/cicd_platforms_comparison.html#conclusion",
+    "title": "CI/CD Platforms Comparison",
+    "section": "",
+    "text": "While all the evaluated platforms have their strengths, GitLab CI/CD provided the best fit for our project requirements, particularly due to its integration with our existing GitLab repositories and its robust container support.\nFor projects with different requirements, other platforms might be more suitable. For example:\n\nFor GitHub users, GitHub Actions provides the tightest integration.\nFor teams requiring maximum customization, Jenkins offers unparalleled flexibility.\nFor those valuing simplicity, CircleCI or Travis CI might be better options.\n\nThe choice of CI/CD platform should always align with your specific project needs, team expertise, and existing toolchain."
+  },
+  {
+    "objectID": "docs/process_management/retrospectives.html",
+    "href": "docs/process_management/retrospectives.html",
+    "title": "Retrospectives",
+    "section": "",
+    "text": "With retrospectives and the documentation of them we try to continuously improve the process and functioning of the team using concrete traceable improvement actions every iteration. Altough we have Iteration Cycles of 1 week, we decided to retrospective every two weeks, to have more time for development, since short project time of 10 weeks.",
+    "crumbs": [
+      "Process Management",
+      "Retrospectives"
+    ]
+  },
+  {
+    "objectID": "docs/process_management/retrospectives.html#what-went-well",
+    "href": "docs/process_management/retrospectives.html#what-went-well",
+    "title": "Retrospectives",
+    "section": "What Went Well? 🎉",
+    "text": "What Went Well? 🎉\n\n(Things that worked well and should be continued.)\n\n[List key successes]\n\n[Positive highlights]",
+    "crumbs": [
+      "Process Management",
+      "Retrospectives"
+    ]
+  },
+  {
+    "objectID": "docs/process_management/retrospectives.html#what-didnt-go-well",
+    "href": "docs/process_management/retrospectives.html#what-didnt-go-well",
+    "title": "Retrospectives",
+    "section": "What Didn’t Go Well? ⚠️",
+    "text": "What Didn’t Go Well? ⚠️\n\n(Challenges, blockers, or things that need improvement.)\n\n[List pain points]\n\n[Issues encountered]",
+    "crumbs": [
+      "Process Management",
+      "Retrospectives"
+    ]
+  },
+  {
+    "objectID": "docs/process_management/retrospectives.html#what-can-we-improve",
+    "href": "docs/process_management/retrospectives.html#what-can-we-improve",
+    "title": "Retrospectives",
+    "section": "What Can We Improve? 🔧",
+    "text": "What Can We Improve? 🔧\n\n(Actionable steps to address challenges and improve processes.)\n\n[List improvement suggestions]\n\n[Concrete action items with owners]",
+    "crumbs": [
+      "Process Management",
+      "Retrospectives"
+    ]
+  },
+  {
+    "objectID": "docs/process_management/retrospectives.html#follow-up-on-last-retrospectives-improvements",
+    "href": "docs/process_management/retrospectives.html#follow-up-on-last-retrospectives-improvements",
+    "title": "Retrospectives",
+    "section": "Follow-up on Last Retrospective’s Improvements 🔄",
+    "text": "Follow-up on Last Retrospective’s Improvements 🔄\n\n(What was suggested last time? What actions were taken? What was the outcome?)\n\n[Previous improvement 1] → [Status/Outcome]\n\n[Previous improvement 2] → [Status/Outcome]",
+    "crumbs": [
+      "Process Management",
+      "Retrospectives"
+    ]
+  },
+  {
+    "objectID": "docs/process_management/retrospectives.html#what-went-well-1",
+    "href": "docs/process_management/retrospectives.html#what-went-well-1",
+    "title": "Retrospectives",
+    "section": "What Went Well? 🎉",
+    "text": "What Went Well? 🎉\n\n(Things that worked well and should be continued.)\n\n[List key successes]\n\n[Positive highlights]",
+    "crumbs": [
+      "Process Management",
+      "Retrospectives"
+    ]
+  },
+  {
+    "objectID": "docs/process_management/retrospectives.html#what-didnt-go-well-1",
+    "href": "docs/process_management/retrospectives.html#what-didnt-go-well-1",
+    "title": "Retrospectives",
+    "section": "What Didn’t Go Well? ⚠️",
+    "text": "What Didn’t Go Well? ⚠️\n\n(Challenges, blockers, or things that need improvement.)\n\n[List pain points]\n\n[Issues encountered]",
+    "crumbs": [
+      "Process Management",
+      "Retrospectives"
+    ]
+  },
+  {
+    "objectID": "docs/process_management/retrospectives.html#what-can-we-improve-1",
+    "href": "docs/process_management/retrospectives.html#what-can-we-improve-1",
+    "title": "Retrospectives",
+    "section": "What Can We Improve? 🔧",
+    "text": "What Can We Improve? 🔧\n\n(Actionable steps to address challenges and improve processes.)\n\n[List improvement suggestions]\n\n[Concrete action items with owners]",
+    "crumbs": [
+      "Process Management",
+      "Retrospectives"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/functional_design.html",
+    "href": "docs/technical_functional_design/functional_design.html",
+    "title": "Functional Design",
+    "section": "",
+    "text": "This project aims to leverage machine learning (ML) to detect solar panels from satellite images, detecting BAG/Housing ID. To ensure scalability, reproducibility, and efficiency, an end-to-end MLOps pipeline will be implemented.",
+    "crumbs": [
+      "Project Documentation",
+      "Functional Design"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/functional_design.html#background-and-context",
+    "href": "docs/technical_functional_design/functional_design.html#background-and-context",
+    "title": "Functional Design",
+    "section": "1. Background and Context",
+    "text": "1. Background and Context\nThe NOWATT project aims to accelerate the energy transition and mitigate grid congestion by promoting energy-neutral neighborhoods. This initiative integrates multiple stakeholders, including residents, SMEs, and government agencies, to optimize energy efficiency through AI-driven solutions.\nA key aspect of this project is leveraging artificial intelligence to categorize homes and residents, enabling personalized sustainability recommendations and district-level planning. One of the major factors influencing a home’s energy efficiency rating is the presence of solar panels, as they significantly impact a building’s energy label score.\nBy 2030, all rental properties in the Netherlands must have an energy label of at least D. Housing associations and landlords will need to take sustainability measures to comply with these regulations. Nijhuis Bouw, an organization specializing in sustainable housing solutions, is particularly interested in automating the assessment of energy efficiency to streamline this transition.\nTo support this, our project focuses on developing an automated solar panel detection system that processes satellite and aerial images. This tool will integrate with public datasets such as Kadaster to enhance energy label predictions, helping stakeholders make informed decisions on housing sustainability.",
+    "crumbs": [
+      "Project Documentation",
+      "Functional Design"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/functional_design.html#problem-statement",
+    "href": "docs/technical_functional_design/functional_design.html#problem-statement",
+    "title": "Functional Design",
+    "section": "2. Problem Statement",
+    "text": "2. Problem Statement\nManually identifying solar panels from aerial and satellite imagery is time-consuming and inefficient. Automating this process with machine learning can significantly improve accuracy and scalability.\nThis project addresses two key challenges:\n1. Solar Panel Detection: Developing a machine learning model that can determine whether a given house in an image has solar panels.\n2. BAG ID Retrieval: Linking the detected solar panel data to the correct house using the BAG ID system, a unique identifier for each building in the Netherlands.\nTo achieve this, we will design and implement a complete data and machine learning pipeline, ensuring the automation of data ingestion/versioning, data preprocessing, model training, model validation, model deployment and model feedback. The pipeline will be designed for seamless integration into existing sustainability assessment systems used by Nijhuis Bouw.\nThe model will be trained using satellite images from South Germany, where solar panel density is high. However, in production, it needs to analyze aerial images of houses in the Netherlands, requiring robust generalization across different data sources.\nAdditionally, the results should ideally be integrated into the broader energy labeling pipeline to support sustainability assessments for housing associations and policymakers.",
+    "crumbs": [
+      "Project Documentation",
+      "Functional Design"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/functional_design.html#stakeholders",
+    "href": "docs/technical_functional_design/functional_design.html#stakeholders",
+    "title": "Functional Design",
+    "section": "3. Stakeholders",
+    "text": "3. Stakeholders\n\nDeveloper Team for operationalising Solar Panel Detection utilising MLOps principle: Delvin Bacho & Navid Gharapanjeh\n\nProject Lead & NOWATT Representative: Selin Çolakhasanoglu (Saxion University of Applied Science, Data Science Team)\n\nClient Organization: Nijhuis Bouw (Sustainability and Housing Solutions) – Contact: Roel Prinsen\n\nFunding Agency: Taskforce for Applied Research SIA",
+    "crumbs": [
+      "Project Documentation",
+      "Functional Design"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/functional_design.html#vision",
+    "href": "docs/technical_functional_design/functional_design.html#vision",
+    "title": "Functional Design",
+    "section": "4. Vision",
+    "text": "4. Vision\nFOR Nijhuis Bouw  WHO need an automated and scalable way to assess and improve the energy efficiency of buildings  THE Solar Panel Detection System  THAT automatically detects solar panels from aerial and satellite imagery to support energy label predictions  AND THAT integrates with public datasets (Kadaster) to provide accurate building-specific insights  UNLIKE manual surveys and outdated energy labeling methods  OUR PRODUCT offers an automated, scalable, and ML-driven approach to sustainability assessment",
+    "crumbs": [
+      "Project Documentation",
+      "Functional Design"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/functional_design.html#project-artifacts-handover-documents",
+    "href": "docs/technical_functional_design/functional_design.html#project-artifacts-handover-documents",
+    "title": "Functional Design",
+    "section": "5. Project Artifacts & Handover Documents",
+    "text": "5. Project Artifacts & Handover Documents\nSince the project started in the past, we got some documents and artifacts we can work with. Here is a list of things we got:\n\nResearch Paper & Satellite Imagery Dataset: A VHR satellite imagery dataset from germany with annotated residential solar panels for training detection models and supporting energy monitoring research.\nPython Script to Split Data: Script to divide satellite images into training and test datasets (split_trainTest.py).\nHousehold Data for Energy Labels:\nCSV files containing building and energy label data for houses in Enschede.\n\nmerged_3dbag_EPonline_Enschede.csv: Contains detailed building information.\n\nsubset_CDF_Enschede.csv: Includes utility data like gas connections and network operator info.\n\nThese datasets are merged for analysis.\n\nEnergy Label Analysis Notebook:\nJupyter Notebook (energie_label_final-Enschede.ipynb) that processes the merged household datasets, cleans and integrates data, and trains a machine learning model to classify energy labels.",
+    "crumbs": [
+      "Project Documentation",
+      "Functional Design"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/functional_design.html#business-goals-and-functional-requirements",
+    "href": "docs/technical_functional_design/functional_design.html#business-goals-and-functional-requirements",
+    "title": "Functional Design",
+    "section": "6. Business Goals and Functional Requirements",
+    "text": "6. Business Goals and Functional Requirements\nThe NOWATT project leverages computer vision to automate solar panel detection, links results with BAG/Housing ID for energy labels, and develops a full MLOps pipeline for efficient deployment. In Chapter 8, the requirements are specified using scenarios. These are the goals that we try to achive:\n\nGoal 1: Automation of Solarpanel Detection System\nIn order to continuously improve and rapidly deploy our solar panel detection system to stakeholders,\nAs the developer team,\nWe want an automated, end-to-end MLOps pipeline that reduces manual overhead, ensures consistent data and model workflows, and accelerates deployment to production.\n\n\n\n\n\n\n\n\nID\nRequirement Description\nMoSCoW\n\n\n\n\nR-01\nSelect and implement an analytics platform to store images, model outputs, and performance metrics for easy retrieval.\nMust\n\n\nR-02\nConfigure a workflow orchestration tool that automatically manages data ingestion, preprocessing, and model training runs.\nMust\n\n\nR-03\nAutomate data preprocessing so images are correctly formatted and validated before model training begins.\nMust\n\n\n\n\n\nGoal 2: Solar Panel Detection Accuracy\nIn order to To efficiently detect energy labels of houses in the Netherlands using Machine Learning in 2025,\nAs the Client Organization,\nWe want to automate the detection and integration of solar panel identification into the NOWATT project process using computer vision.\n\n\n\n\n\n\n\n\nID\nRequirement Description\nMoSCoW\n\n\n\n\nR-04\nDevelop a machine learning model that processes aerial or satellite images and accurately detects the presence of solar panels.\nMust\n\n\nR-05\nEvaluate and compare the performance of multiple object detection models to determine the most suitable approach for solar panel identification.\nMust\n\n\nR-06\nAcquire high-quality Dutch aerial imagery to ensure the final trained model can be applied effectively to local housing data.\nShould\n\n\n\n\n\nGoal 3: House ID Detection / Connect with Kadaster API\nIn order to link detected solar panel detections with the existing housing data for better energy label predictions,\nAs the Project Lead,\nI want to get also the House ID as an output of the pipeline/system using the Kadaster API, ensuring at least 85% successful matches.\n\n\n\n\n\n\n\n\nID\nRequirement Description\nMoSCoW\n\n\n\n\nR-07\nEstablish a method to integrate the ML model’s output with existing housing datasets by linking detection results to specific houses, for example, using House IDs.\nShould\n\n\nR-08\nDevelop an automated approach to replace or reduce manual data scraping processes, enabling a more efficient and scalable way to populate the final dataset.\nCould\n\n\n\n\n\n\n6.1 Mapping Requirements to Pipeline Phases\nBelow is an overview of the main phases in our envisioned ML pipeline. We currently focus on the phases most relevant to this project (Data Ingestion/Versioning, Data Preprocessing, Model Training, Model Validation, Model Deployment, and Model Feedback). Other phases, such as Data Validation, Model Analysis, and Model Versioning, are out of scope. The Requirements defined are now linked to each phase of the ML-Lifecycle. In general, we need to say, that we will deal with two types of data. One the inference data, which is publicly available and already labeled. The other, is the inference Data, which is different type of data than the training data.\n\nPhase 1: Data Ingestion / Versioning\nRelevant Requirements: - R-01\n“Select and implement an analytics platform to store images, model outputs, and performance metrics for easy retrieval.” - R-02\n“Configure a workflow orchestration tool that automatically manages data ingestion, preprocessing, and model training runs.” - R-08\n“Develop an automated approach to replace or reduce manual data scraping processes, enabling a more efficient and scalable way to populate the final dataset.”\nScope & Purpose:\nIn this phase, we collect data (e.g., satellite or aerial images, addresses, and house IDs), store it in a version-controlled environment, and automate the process to reduce manual overhead.\n\n\nPhase 2: Data Validation\n(Out of Scope currently—no direct requirements yet.)\n\n\nPhase 3: Data Preprocessing\nRelevant Requirement: - R-03\n“Automate data preprocessing so images are correctly formatted and validated before model training begins.”\nScope & Purpose:\nOnce data is ingested, it must be cleaned and prepared for model training. This includes ensuring images have consistent formats, resolutions, and metadata. By automating preprocessing (R-03), we minimize errors and improve the efficiency of subsequent steps.\n\n\nPhase 4: Model Training (without tuning)\nRelevant Requirements: - R-04\n“Develop a machine learning model that processes aerial or satellite images and accurately detects the presence of solar panels.” - R-05\n“Evaluate and compare the performance of multiple object detection models to determine the most suitable approach for solar panel identification.” - R-06\n“Acquire high-quality Dutch aerial imagery to ensure the final trained model can be applied effectively to local housing data.”\nScope & Purpose:\nIn this phase, we build and refine our computer vision model(s) for solar panel detection. Requirement (R-04) lays out the core objective of accurately detecting solar panels, while (R-05) ensures multiple models are compared for optimal performance. Requirement (R-06) secures the Dutch imagery needed to adapt the model to local housing conditions.\n\n\nPhase 5: Model Analysis\n(Out of Scope currently—no direct requirements yet.)\n\n\nPhase 6: Model Versioning / Validation\n(Out of Scope currently—no direct requirements yet.)\n\n\nPhase 7: Model Deployment\nNote:\nWhile “rapid deployment” is part of our overall Goal 1 (i.e., automating and accelerating the pipeline), there are no explicit requirements that solely address the deployment process. In practice, R-02 (workflow orchestration) supports deployment by automating end-to-end steps, but we have not defined specific “Must” or “Should” requirements for deployment alone.\n\n\nPhase 8: Model Feedback\n(Out of Scope currently—no direct requirements yet.)",
+    "crumbs": [
+      "Project Documentation",
+      "Functional Design"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/functional_design.html#non-functional-requirements",
+    "href": "docs/technical_functional_design/functional_design.html#non-functional-requirements",
+    "title": "Functional Design",
+    "section": "7. Non-Functional Requirements",
+    "text": "7. Non-Functional Requirements\n\nQR-1\nTag: Performance\nAmbition: Deliver near–real-time solar panel detection for quick decision-making.  Scale: Up to 1,000 images per batch without significant slowdowns.\nMeter:\n- Inference Time/Image (ms)\n- Training Completion (hrs)\nGoal:\n- Inference ≤ 10ms per image on a single GPU.\n- Training a new model (50 epochs) within 3 hours.",
+    "crumbs": [
+      "Project Documentation",
+      "Functional Design"
+    ]
+  },
+  {
+    "objectID": "docs/technical_functional_design/functional_design.html#scenarios-for-requirements",
+    "href": "docs/technical_functional_design/functional_design.html#scenarios-for-requirements",
+    "title": "Functional Design",
+    "section": "8. Scenarios for Requirements",
+    "text": "8. Scenarios for Requirements\n\n\nR-01: Select and implement an appropriate analytics platform to store images, model outputs, and evaluation results.\n\nScenario 1: Image and Result Storage\nGiven a processed image and its detection result\nWhen the system completes inference\nThen the image, detection label, and confidence score should be stored in the analytics platform\n\n\n\n\nR-02: Choose and configure a workflow orchestration tool to automate the data and ML pipeline execution.\n\nScenario 1: Pipeline Automation\nGiven a new batch of labeled images is added for training in bucket A When the workflow orchestration tool runs the pipeline\nThen all steps (data ingestion, preprocessing, model training etc.) should execute in sequence automatically\n\n\nScenario 2: Pipeline Automation\nGiven a new batch of images is added for processing in bucket B When the workflow orchestration tool runs the pipeline\nThen the inference process should be runned\n\n\n\n\nR-03: Implement automated data preprocessing to ensure images are correctly formatted before model training.\n\nScenario 1: Image Preprocessing\nGiven a raw aerial or satellite image\nWhen the preprocessing module runs\nThen the image should be resized, normalized, and stored in the preprocessed dataset\n\n\nScenario 2: Batch Preprocessing\nGiven a batch of raw images\nWhen preprocessing is triggered\nThen all images in the dataset should be processed and validated for model training\n\n\n\nR-04: Develop a machine learning model that processes aerial or satellite images and accurately detects the presence of solar panels.\n\nScenario 1: Successful Solar Panel Detection\nGiven an aerial or satellite image of a house with solar panels\nWhen the machine learning model processes the image\nThen the system should return a detection result indicating “Solar Panels Detected” with a confidence score\n\n\nScenario 2: No Solar Panel Detected\nGiven an aerial or satellite image of a house without solar panels\nWhen the machine learning model processes the image\nThen the system should return a detection result indicating “No Solar Panels Detected” with a confidence score\n\n\n\n\nR-05: Evaluate and compare the performance of multiple object detection models to determine the most suitable approach for solar panel identification.\n\nScenario 1: Model Performance Evaluation\nGiven multiple trained object detection models\nWhen the system evaluates them using a standardized test dataset\nThen the system should generate a comparison report with metrics such as accuracy, precision, recall, and IoU\n\n\nScenario 2: Selection of the Best Model\nGiven performance evaluation results of multiple models\nWhen the system determines the most accurate and reliable model\nThen the selected model should be marked as the default for deployment\n\n\n\n\nR-06: Acquire high-quality Dutch aerial imagery to ensure the final trained model can be applied effectively to local housing data.\n\nScenario 1: Image Acquisition\nGiven the need to apply the ML model to Dutch housing data\nWhen high-quality aerial images of Dutch houses are sourced\nThen the images should be stored and made available for model testing and inference\n\n\nScenario 2: API Usage\nGiven an API like PDOK or Google Maps When calling the API using an address Then the api should respond with an aerial housing image.\n\n\n\n\nR-07: Establish a method to integrate the ML model’s output with existing housing datasets by linking detection results to specific houses, for example, using House IDs.\n\nScenario 1: House ID Assignment\nGiven an image and an adress where the ML model detects solar panels\nWhen the system retrieves the corresponding House ID Then the detection result should be linked to the correct House ID in the final housing dataset\n\n\nScenario 2: Missing House ID\nGiven an image where the ML model detects solar panels\nWhen the system is unable to find a matching House ID\nThen the system should log the detection result as “House ID Not Found”\n\n\n\n\nR-08: Develop an automated approach to replace or reduce manual data scraping processes, enabling a more efficient and scalable way to populate the final dataset.\n\nScenario 1: Get Postal\nGiven a city name When the cityname is passed to the API Then it should respond with all the addresses of the city\n\n\nScenario 2: Automated Data Retrieval\nGiven an address When the address is passed to the kadaster API and Common datafactory API Then it should respond with data that can be included in the final dataset for calculating energy labels",
+    "crumbs": [
+      "Project Documentation",
+      "Functional Design"
+    ]
+  }
+]
